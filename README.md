@@ -45,27 +45,42 @@ A high-performance, lightweight, and modern **dynamic PHP portfolio website temp
 ## 📦 File System Overview
 
 ```text
-G:.
-│   about.php          # Detailed professional profile layout
-│   index.php          # Principal landing page entrance
-│   LICENSE            # Open-source authorization permissions
-│   README.md          # Comprehensive project documentation
-│   
-├───assets             # Application static interface assets
-│   └───images         # Local media resources and structural graphics
-│           badimalika.jpg
-│           mani_baudha.jpg
-│           marigold.jpg
-│           Mountains-Nepal-II.jpg
-│           nepal boudhanath stupa.jpg
-│           
-├───blogs              # Dynamic blogging engine components
-│       blogs.php      # Main blog dynamic stream archive
-│       post.php       # Individual single post presentation template
-│       
-└───includes           # Global presentation components
-        footer.php     # Unified footer system and script handlers
-        header.php     # Global site navigation block
+📦 Dynamic-Portfolio-Website
+ ├── about.php              # Detailed professional profile layout
+ ├── index.php              # Principal landing page entrance
+ ├── LICENSE                # Open-source MIT authorization permissions
+ ├── README.md              # Comprehensive project documentation
+ │
+ ├── 📁 assets              # Application static interface assets
+ │   ├── 📁 favicon         # Multi-platform browser and application icons
+ │   │   ├── android-chrome-192x192.png
+ │   │   ├── android-chrome-512x512.png
+ │   │   ├── favicon-16x16.png
+ │   │   ├── favicon-32x32.png
+ │   │   ├── favicon.ico
+ │   │   └── profile.png
+ │   │
+ │   ├── 📁 images          # Local media resources and structural graphics
+ │   │   ├── badimalika.jpg
+ │   │   ├── mani_baudha.jpg
+ │   │   ├── marigold.jpg
+ │   │   ├── Mountains-Nepal-II.jpg
+ │   │   └── nepal boudhanath stupa.jpg
+ │   │
+ │   ├── 📁 profile         # Profile asset repository
+ │   └── 📁 screenshoots    # Portfolio preview and layout mockups
+ │       ├── article_page.png
+ │       ├── homepage_1.png
+ │       ├── homepage_2.png
+ │       └── homepage_3.png
+ │
+ ├── 📁 blogs               # Dynamic blogging engine components
+ │   ├── blogs.php          # Main blog dynamic stream archive
+ │   └── post.php           # Individual single post presentation template
+ │
+ └── 📁 includes            # Global structural presentation components
+     ├── footer.php         # Unified footer system and script handlers
+     └── header.php         # Global site navigation block & theme controller
 ```
 
 ---
