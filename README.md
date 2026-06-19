@@ -45,15 +45,27 @@ A high-performance, lightweight, and modern **dynamic PHP portfolio website temp
 ## 📦 File System Overview
 
 ```text
-├── blogs/
-│   ├── blogs.php      # Main blog dynamic stream archive
-│   └── post.php       # Individual single post presentation template
-├── includes/
-│   ├── header.php     # Global site navigation block
-│   └── footer.php     # Unified footer system and script handlers
-├── about.php          # Detailed professional profile layout
-├── index.php          # Principal landing page entrance
-└── screenshots/       # Project presentation assets
+G:.
+│   about.php          # Detailed professional profile layout
+│   index.php          # Principal landing page entrance
+│   LICENSE            # Open-source authorization permissions
+│   README.md          # Comprehensive project documentation
+│   
+├───assets             # Application static interface assets
+│   └───images         # Local media resources and structural graphics
+│           badimalika.jpg
+│           mani_baudha.jpg
+│           marigold.jpg
+│           Mountains-Nepal-II.jpg
+│           nepal boudhanath stupa.jpg
+│           
+├───blogs              # Dynamic blogging engine components
+│       blogs.php      # Main blog dynamic stream archive
+│       post.php       # Individual single post presentation template
+│       
+└───includes           # Global presentation components
+        footer.php     # Unified footer system and script handlers
+        header.php     # Global site navigation block
 ```
 
 ---
@@ -68,7 +80,7 @@ Ensure you have [XAMPP](https://apachefriends.org) downloaded and installed on y
 ### 2. Clone the Repository
 Open your Git Bash or PowerShell terminal inside your `xampp/htdocs/` folder and run:
 ```bash
-git clone https://github.com
+git clone https://github.com/hemkhatri/Dynamic-Portfolio-Website
 ```
 
 ### 3. Run the Project
