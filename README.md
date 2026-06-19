@@ -11,10 +11,13 @@ A high-performance, lightweight, and modern **dynamic PHP portfolio website temp
 ---
 
 ## 📸 Project Previews & Screenshots
-
+---
+## Desktop View
 ### 🖥️ Homepage Interface
 <!-- Replace the path below once you upload your screenshot to your repository -->
-![Dynamic PHP Portfolio Homepage Preview](screenshots/homepage.png)
+<img width="1914" height="910" alt="Desktop-home-page-image" src="https://github.com/user-attachments/assets/76802de7-26fa-4a8c-8d12-0792ded725a8" />
+<img width="1919" height="898" alt="image" src="https://github.com/user-attachments/assets/08a91f2a-9286-4d8e-9e94-49172e3c4964" />
+<img width="1919" height="881" alt="image" src="https://github.com/user-attachments/assets/03babe40-fd1c-4cf0-b1c2-806533577c2c" />
 
 ### ✍️ Dynamic Blog Archive (`blogs.php`)
 <!-- Add your second screenshot placeholder here -->
