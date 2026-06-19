@@ -109,7 +109,7 @@
         <div
             class="relative w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex-shrink-0 transform -rotate-2">
 
-            <img src="https://images.unsplash.com/photo-1471899236350-e3016bf1e69e" alt="Himalayan stream"
+            <img src="assets/images/badimalika.jpg" alt="Badimalika"
                 class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
         </div>
@@ -118,7 +118,7 @@
         <div
             class="relative w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex-shrink-0 transform rotate-3">
 
-            <img src="https://images.unsplash.com/photo-1471899236350-e3016bf1e69e" alt="Himalayan stream"
+            <img src="assets/images/mani_baudha.jpg" alt="Mani of Buddha Religion"
                 class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
         </div>
@@ -127,7 +127,7 @@
         <div
             class="relative w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex-shrink-0 transform -rotate-2">
 
-            <img src="https://images.unsplash.com/photo-1471899236350-e3016bf1e69e" alt="Himalayan stream"
+            <img src="assets/images/marigold.jpg" alt="Marigold Flower"
                 class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
         </div>
@@ -136,7 +136,7 @@
         <div
             class="relative w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex-shrink-0 transform rotate-2">
 
-            <img src="https://images.unsplash.com/photo-1471899236350-e3016bf1e69e" alt="Himalayan stream"
+            <img src="assets/images/Mountains-Nepal-II.jpg" alt="Mountains of Nepal"
                 class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
         </div>
@@ -145,7 +145,7 @@
         <div
             class="relative w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex-shrink-0 transform -rotate-2">
 
-            <img src="https://images.unsplash.com/photo-1471899236350-e3016bf1e69e" alt="Himalayan stream"
+            <img src="assets/images/nepal boudhanath stupa.jpg" alt="Nepal Boudhanath stupa"
                 class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
         </div>
