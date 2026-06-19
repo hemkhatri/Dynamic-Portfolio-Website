@@ -255,7 +255,7 @@
 
 
         <!-- Project 2 -->
-       <a href="#"
+        <a href="#"
             class="cursor-pointer bg-transparent hover:bg-slate-100 dark:hover:bg-neutral-800/40 p-8 rounded-2xl flex flex-col h-full border border-gray-200/60 dark:border-gray-800/20 group transition-colors duration-300">
             <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">
                 merojob</h3>
@@ -605,49 +605,60 @@
 
 
         </div>
-<!-- Right Column Panel: Work Experience Box -->
-<div class="lg:col-span-1 bg-white dark:bg-[#343742]/40 border border-gray-200/80 dark:border-gray-700/40 p-6 rounded-3xl shadow-sm dark:shadow-inner transition-colors duration-300">
+        <!-- Right Column Panel: Work Experience Box -->
+        <div
+            class="lg:col-span-1 bg-white dark:bg-[#343742]/40 border border-gray-200/80 dark:border-gray-700/40 p-6 rounded-3xl shadow-sm dark:shadow-inner transition-colors duration-300">
 
-    <!-- Header with Briefcase Icon -->
-    <div class="flex items-center gap-3 mb-6">
-        <div class="text-gray-500 dark:text-teal-400 transition-colors duration-300">
-            <!-- Briefcase SVG Icon -->
-            <svg class="w-5 h-5 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 .552-.448 1-1 1H4.75c-.552 0-1-.448-1-1v-4.25m16.5 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 14.15m17.25 0c-.267-.034-.539-.05-.814-.05H4.564c-.275 0-.547.016-.814.05M16.5 7.5V6.25a2.25 2.25 0 00-2.25-2.25h-4.5A2.25 2.25 0 007.5 6.25V7.5m9 0H7.5" />
-            </svg>
-        </div>
-        <h3 class="text-sm font-semibold text-gray-900 dark:text-white tracking-wide transition-colors duration-300">Work Experience</h3>
-    </div>
-
-    <!-- Job List Timeline Container -->
-    <div class="space-y-6 mb-6">
-        <!-- Job Entry 1: merojob -->
-        <div class="flex items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
-                <!-- Circular Company Logo Wrapper -->
-                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0 border border-gray-200 dark:border-gray-600/50 p-1 transition-colors duration-300">
-                    <span class="text-xs font-bold text-blue-900 tracking-tighter">mj</span>
+            <!-- Header with Briefcase Icon -->
+            <div class="flex items-center gap-3 mb-6">
+                <div class="text-gray-500 dark:text-teal-400 transition-colors duration-300">
+                    <!-- Briefcase SVG Icon -->
+                    <svg class="w-5 h-5 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M20.25 14.15v4.25c0 .552-.448 1-1 1H4.75c-.552 0-1-.448-1-1v-4.25m16.5 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 14.15m17.25 0c-.267-.034-.539-.05-.814-.05H4.564c-.275 0-.547.016-.814.05M16.5 7.5V6.25a2.25 2.25 0 00-2.25-2.25h-4.5A2.25 2.25 0 007.5 6.25V7.5m9 0H7.5" />
+                    </svg>
                 </div>
-                <!-- Title & Role Info -->
-                <div class="flex flex-col">
-                    <span class="text-sm font-semibold text-gray-900 dark:text-white leading-tight transition-colors duration-300">merojob</span>
-                    <span class="text-xs text-teal-600 dark:text-teal-400 mt-0.5 font-medium transition-colors duration-300">Senior Full Stack Developer</span>
+                <h3
+                    class="text-sm font-semibold text-gray-900 dark:text-white tracking-wide transition-colors duration-300">
+                    Work Experience</h3>
+            </div>
+
+            <!-- Job List Timeline Container -->
+            <div class="space-y-6 mb-6">
+                <!-- Job Entry 1: merojob -->
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <!-- Circular Company Logo Wrapper -->
+                        <div
+                            class="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0 border border-gray-200 dark:border-gray-600/50 p-1 transition-colors duration-300">
+                            <span class="text-xs font-bold text-blue-900 tracking-tighter">mj</span>
+                        </div>
+                        <!-- Title & Role Info -->
+                        <div class="flex flex-col">
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white leading-tight transition-colors duration-300">merojob</span>
+                            <span
+                                class="text-xs text-teal-600 dark:text-teal-400 mt-0.5 font-medium transition-colors duration-300">Senior
+                                Full Stack Developer</span>
+                        </div>
+                    </div>
+                    <!-- Timeline Date Placement -->
+                    <span
+                        class="text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap transition-colors duration-300">2021
+                        — Present</span>
                 </div>
             </div>
-            <!-- Timeline Date Placement -->
-            <span class="text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap transition-colors duration-300">2021 — Present</span>
-        </div>
-    </div>
 
-    <!-- Download CV Button Box -->
-    <a href="/resume.pdf" download
-        class="group w-full inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium py-3 px-4 bg-gray-100 hover:bg-gray-200/80 dark:bg-neutral-800/60 dark:hover:bg-neutral-800 dark:text-zinc-200 border border-gray-300/60 dark:border-gray-700/50 hover:border-gray-400 dark:hover:border-gray-600 transition-all duration-200">
-        Download CV
-        <svg class="w-3.5 h-3.5 stroke-[2.5] animate-drop-twice transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
-        </svg>
-    </a>
-</div>
+            <!-- Download CV Button Box -->
+            <a href="/resume.pdf" download
+                class="group w-full inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium py-3 px-4 bg-gray-100 hover:bg-gray-200/80 dark:bg-neutral-800/60 dark:hover:bg-neutral-800 dark:text-zinc-200 border border-gray-300/60 dark:border-gray-700/50 hover:border-gray-400 dark:hover:border-gray-600 transition-all duration-200">
+                Download CV
+                <svg class="w-3.5 h-3.5 stroke-[2.5] animate-drop-twice transition-transform duration-200" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+                </svg>
+            </a>
+        </div>
 
 
 

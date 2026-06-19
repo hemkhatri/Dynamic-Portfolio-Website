@@ -49,53 +49,60 @@ $current_page = basename($_SERVER['PHP_SELF']);
             }
         }
     </script>
-   <style>
-    /* Base setup for the logo pill container */
-    #logo-pill {
-        background-color: transparent;
-        border: 1px solid transparent;
-        box-shadow: none;
-        backdrop-filter: blur(0px);
-        -webkit-backdrop-filter: blur(0px);
-        /* Smooth out all properties over 250ms natively */
-        transition: all 0.25s ease-in-out !important; 
-    }
+    <script src="https://unpkg.com"></script>
 
-    /* Light Mode: Injects the blurred glass layer cleanly on scroll down */
-    #logo-pill.scrolled {
-        background-color: rgba(255, 255, 255, 0.4) !important;
-        backdrop-filter: blur(12px) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(229, 231, 235, 0.4) !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
-    }
+    <style>
+        /* Base setup for the logo pill container */
+        #logo-pill {
+            background-color: transparent;
+            border: 1px solid transparent;
+            box-shadow: none;
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            /* Smooth out all properties over 250ms natively */
+            transition: all 0.25s ease-in-out !important;
+        }
 
-    /* Dark Mode: Adaptive dark glass settings on scroll down */
-    .dark #logo-pill.scrolled {
-        background-color: rgba(23, 23, 23, 0.4) !important;
-        border: 1px solid rgba(63, 63, 70, 0.4) !important;
-        box-shadow: none !important;
-    }
-</style>
+        /* Light Mode: Injects the blurred glass layer cleanly on scroll down */
+        #logo-pill.scrolled {
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(229, 231, 235, 0.4) !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+        }
+
+        /* Dark Mode: Adaptive dark glass settings on scroll down */
+        .dark #logo-pill.scrolled {
+            background-color: rgba(23, 23, 23, 0.4) !important;
+            border: 1px solid rgba(63, 63, 70, 0.4) !important;
+            box-shadow: none !important;
+        }
+    </style>
 
 
 
 
 </head>
 
-<body class="bg-white dark:bg-black min-h-screen font-body flex flex-col transition-colors duration-300">
+<body hx-boost="true" hx-target="#main-content" hx-select="#main-content" class="bg-white dark:bg-black min-h-screen font-body flex flex-col transition-colors duration-300">
 
     <!-- Header Component (Main container is fully invisible/naked) -->
     <header id="main-header"
-        class="fixed top-6 left-0 w-full px-4 sm:px-8 lg:px-16 transition-all duration-300 ease-in-out z-50">
-        <div class="max-w-7xl mx-auto flex items-center justify-between h-16">
+        class="fixed top-6 left-0 right-0 w-full lg:left-12 lg:right-12 lg:w-auto px-4 sm:px-8 lg:px-16 transition-all duration-300 ease-in-out z-50">
+
+
+        <!-- Changed max-w-7xl to max-w-5xl to pull components closer on desktop -->
+        <div class="max-w-6xl mx-auto flex items-center justify-between h-16">
+
 
             <!-- Fully naked container at top position — no border, no shadow, no bg -->
-<div id="logo-pill" class="flex-shrink-0 flex items-center rounded-full px-5 py-2">
-    <a href="<?php echo ($current_page == 'index.php') ? 'index.php' : '../index.php'; ?>" class="font-headline font-bold text-gray-900 dark:text-white text-base sm:text-lg tracking-wide transition-colors">
-        Hem B. Khatri
-    </a>
-</div>
+            <div id="logo-pill" class="flex-shrink-0 flex items-center rounded-full px-5 py-2">
+                <a href="<?php echo ($current_page == 'index.php') ? 'index.php' : '../index.php'; ?>"
+                    class="font-headline font-bold text-gray-900 dark:text-white text-base sm:text-lg tracking-wide transition-colors">
+                    Hem B. Khatri
+                </a>
+            </div>
 
 
 
@@ -134,7 +141,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                     </svg>
                 </button>
-
                 <!-- Mobile Hamburger Button -->
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn"
@@ -166,88 +172,100 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </header>
 
+    <!-- Enforce direct hx-swap attributes right at the container element to maximize speed -->
+    <main id="main-content" hx-swap="innerHTML transition:false">
 
+        <!-- JavaScript logic optimized for AJAX single-page loads -->
+        <script>
+            function initializeHeaderLogic() {
+                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const header = document.getElementById('main-header');
 
+                const themeToggleBtn = document.getElementById('theme-toggle');
+                const themeToggleDarkIcon = document.getElementById('theme-toggle-moon-icon');
+                const themeToggleLightIcon = document.getElementById('theme-toggle-sun-icon');
 
-    <!-- JavaScript logic to toggle mobile menu drawer and synchronize global theme states -->
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const header = document.getElementById('main-header');
+                const logoPill = document.getElementById('logo-pill');
 
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeToggleDarkIcon = document.getElementById('theme-toggle-moon-icon');
-        const themeToggleLightIcon = document.getElementById('theme-toggle-sun-icon');
-        
-        const logoPill = document.getElementById('logo-pill');
-
-        // Theme Icon Setup Logic
-        if (document.documentElement.classList.contains('dark')) {
-            themeToggleLightIcon.classList.remove('hidden');
-            themeToggleDarkIcon.classList.add('hidden');
-        } else {
-            themeToggleDarkIcon.classList.remove('hidden');
-            themeToggleLightIcon.classList.add('hidden');
-        }
-
-        // Click Logic for theme alterations
-        if (themeToggleBtn) {
-            themeToggleBtn.addEventListener('click', () => {
+                // Theme Icon Setup Logic
                 if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                    themeToggleDarkIcon.classList.remove('hidden');
-                    themeToggleLightIcon.classList.add('hidden');
+                    if (themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
+                    if (themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
                 } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                    themeToggleLightIcon.classList.remove('hidden');
-                    themeToggleDarkIcon.classList.add('hidden');
+                    if (themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
+                    if (themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
                 }
-            });
-        }
 
-        // Drawer Menu Action Controllers
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
+                // Click Logic for theme alterations
+                if (themeToggleBtn) {
+                    // Prevent piling up duplicate event listeners during AJAX re-injection
+                    themeToggleBtn.replaceWith(themeToggleBtn.cloneNode(true));
+                    const newThemeBtn = document.getElementById('theme-toggle');
 
-        // Scroll Tracking Handlers
-        let lastScrollY = window.scrollY;
+                    newThemeBtn.addEventListener('click', () => {
+                        if (document.documentElement.classList.contains('dark')) {
+                            document.documentElement.classList.remove('dark');
+                            localStorage.setItem('color-theme', 'light');
+                            document.getElementById('theme-toggle-moon-icon').classList.remove('hidden');
+                            document.getElementById('theme-toggle-sun-icon').classList.add('hidden');
+                        } else {
+                            document.documentElement.classList.add('dark');
+                            localStorage.setItem('color-theme', 'dark');
+                            document.getElementById('theme-toggle-sun-icon').classList.remove('hidden');
+                            document.getElementById('theme-toggle-moon-icon').classList.add('hidden');
+                        }
+                    });
+                }
 
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-
-            // Hide/Show entire container bar matrix
-            if (currentScrollY > lastScrollY && currentScrollY > 60) {
-                header.classList.add('-translate-y-32', 'opacity-0');
-                if (mobileMenu) mobileMenu.classList.add('hidden');
-            } else {
-                header.classList.remove('-translate-y-32', 'opacity-0');
+                // Drawer Menu Action Controllers
+                if (mobileMenuBtn && mobileMenu) {
+                    mobileMenuBtn.replaceWith(mobileMenuBtn.cloneNode(true));
+                    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+                        document.getElementById('mobile-menu').classList.toggle('hidden');
+                    });
+                }
             }
 
-            // Reverse Evaluation Mode: Appends classes if user moves away from top
-            if (currentScrollY > 10) {
-                if (logoPill) logoPill.classList.add('scrolled');
-            } else {
-                if (logoPill) logoPill.classList.remove('scrolled');
+            // Bind layout initializations to both structural lifecycle conditions
+            document.addEventListener('DOMContentLoaded', initializeHeaderLogic);
+            document.addEventListener('htmx:afterOnLoad', initializeHeaderLogic);
+
+            // Global Window Scroll Tracking Handlers (Attached only once cleanly)
+            if (!window.scrollTrackingInitialized) {
+                let lastScrollY = window.scrollY;
+                window.addEventListener('scroll', () => {
+                    const currentScrollY = window.scrollY;
+                    const header = document.getElementById('main-header');
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    const logoPill = document.getElementById('logo-pill');
+
+                    if (header) {
+                        if (currentScrollY > lastScrollY && currentScrollY > 60) {
+                            header.classList.add('-translate-y-32', 'opacity-0');
+                            if (mobileMenu) mobileMenu.classList.add('hidden');
+                        } else {
+                            header.classList.remove('-translate-y-32', 'opacity-0');
+                        }
+                    }
+
+                    if (logoPill) {
+                        if (currentScrollY > 10) {
+                            logoPill.classList.add('scrolled');
+                        } else {
+                            logoPill.classList.remove('scrolled');
+                        }
+                    }
+                    lastScrollY = currentScrollY;
+                });
+                window.scrollTrackingInitialized = true;
             }
+        </script>
 
-            lastScrollY = currentScrollY;
-        });
-    });
-</script>
+        <!-- Start of main wrapper block -->
+        <section
+            class="w-full bg-white dark:bg-[#22242a] min-h-screen flex flex-col items-center overflow-x-hidden flex-grow transition-colors duration-300">
 
-
-
-
-    <!-- Start of main wrapper block -->
-    <section
-        class="w-full bg-white dark:bg-[#22242a] min-h-screen py-12 md:py-20 flex flex-col items-center justify-center overflow-x-hidden flex-grow transition-colors duration-300">
-
-        <!-- Main content inside this neutral card box -->
-        <div
-            class="w-full max-w-7xl bg-[#f0f2f5] dark:bg-[#2c2e35] rounded-xl p-8 sm:p-12 md:p-16 shadow-2xl border border-gray-200/50 dark:border-gray-800/50 transition-colors duration-300">
+            <!-- Inner Card: Pushed directly to the absolute top of the screen layout -->
+            <div
+                class="w-full max-w-7xl bg-[#f0f2f5] dark:bg-[#2c2e35] border-x border-gray-200/50 dark:border-gray-800/50 pt-28 pb-12 px-8 sm:pt-36 sm:pb-16 sm:px-12 md:pt-40 md:pb-20 md:p-16 transition-colors duration-300 min-h-screen">
