@@ -35,31 +35,65 @@
     .group:hover .animate-drop-twice {
         animation: minimal-drop 0.6s ease-in-out;
     }
+
+    /* Hide the tooltip by default */
+    .tooltip-container .tooltip-text {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        z-index: 10;
+
+        /* Position centered at the bottom of the image */
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+
+        /* Styling */
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #ffffff;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 14px;
+        white-space: nowrap;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    /* Show the tooltip on hover */
+    .tooltip-container:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
 </style>
 
 <!-- HERO SECTION -->
 
 <!-- Profile Image Placeholder -->
 <div class="mb-8">
-    <img src="https://placeholder.com" alt="Hem B. Khatri"
+    <img src="assets/favicon/profile.png" alt="Hem B. Khatri"
         class="w-16 h-16 rounded-full object-cover border-2 border-brandPrimary/30">
 </div>
 
 <!-- Headline -->
-<h1 class="font-sans text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
+<h1
+    class="font-sans text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight transition-colors duration-300">
     Hem B. Khatri — Full Stack<br class="hidden sm:block">
     Developer in the Himalayas,<br class="hidden sm:block">
     Nepal
 </h1>
 
+
 <!-- Bio Description -->
-<p class="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
-    I'm Hem B. Khatri, a <a href="/about"><span class="text-teal-500 font-bold">Senior Full Stack Developer
+<p
+    class="text-gray-600 dark:text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl mb-10 transition-colors duration-300">
+    I'm Hem B. Khatri, a <a href="/about" class="group/link"><span
+            class="text-teal-600 dark:text-teal-400 font-bold hover:underline transition-colors duration-200">Senior
+            Full Stack Developer
             based in Nepal</span></a> with 4+ years building production systems. I focus on crafting scalable,
-    performant, and
-    robust backend architectures, modern web frameworks, and bringing high-performance digital solutions to
+    performant, and robust backend architectures, modern web frameworks, and bringing high-performance digital solutions
+    to
     life.
 </p>
+
 
 <!-- Social Icons Link-->
 <div class="flex items-center space-x-6">
@@ -105,49 +139,79 @@
     <div
         class="flex flex-row items-center justify-center gap-10 overflow-x-auto overflow-y-visible py-10 w-full px-4 sm:px-8 no-scrollbar">
 
-        <!-- Card 1: Tilted Left -->
-        <div
-            class="relative w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex-shrink-0 transform -rotate-2">
+        <!-- Card 1: Tilted Left (Removed overflow-hidden from here) -->
+        <div class="group relative w-64 h-80 shadow-2xl border border-white/5 flex-shrink-0 transform -rotate-2">
 
-            <img src="assets/images/badimalika.jpg" alt="Badimalika"
-                class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+            <!-- Wrapper to keep the rounded corners restricted to just the image -->
+            <div class="w-full h-full rounded-3xl overflow-hidden relative">
+                <img src="assets/images/badimalika.jpg" alt="Badimalika" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+            </div>
+
+            <!-- Tailwind Tooltip (Safe from overflow-hidden) -->
+            <span
+                class="absolute bottom-4 left-4 z-20 text-white/80 text-xs font-light tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                Credit: tourisminfonepal.com
+            </span>
         </div>
 
         <!-- Card 2: Tilted Right -->
-        <div
-            class="relative w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex-shrink-0 transform rotate-3">
-
-            <img src="assets/images/mani_baudha.jpg" alt="Mani of Buddha Religion"
-                class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+        <div class="group relative w-64 h-80 shadow-2xl border border-white/5 flex-shrink-0 transform rotate-3">
+            <!-- Image Wrapper to clip corners safely -->
+            <div class="w-full h-full rounded-3xl overflow-hidden relative">
+                <img src="assets/images/mani_baudha.jpg" alt="Mani of Buddha Religion"
+                    class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+            </div>
+            <!-- Tooltip -->
+            <span
+                class="absolute bottom-4 left-4 z-20 text-white/80 text-xs font-light tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                Credit: worldnomads.com
+            </span>
         </div>
 
         <!-- Card 3: Tilted Left Slightly -->
-        <div
-            class="relative w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex-shrink-0 transform -rotate-2">
-
-            <img src="assets/images/marigold.jpg" alt="Marigold Flower"
-                class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+        <div class="group relative w-64 h-80 shadow-2xl border border-white/5 flex-shrink-0 transform -rotate-2">
+            <!-- Image Wrapper to clip corners safely -->
+            <div class="w-full h-full rounded-3xl overflow-hidden relative">
+                <img src="assets/images/marigold.jpg" alt="Marigold Flower" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+            </div>
+            <!-- Tooltip -->
+            <span
+                class="absolute bottom-4 left-4 z-20 text-white/80 text-xs font-light tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                Credit: brendansadventures.com
+            </span>
         </div>
 
         <!-- Card 4: Tilted Right More -->
-        <div
-            class="relative w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex-shrink-0 transform rotate-2">
-
-            <img src="assets/images/Mountains-Nepal-II.jpg" alt="Mountains of Nepal"
-                class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+        <div class="group relative w-64 h-80 shadow-2xl border border-white/5 flex-shrink-0 transform rotate-2">
+            <!-- Image Wrapper to clip corners safely -->
+            <div class="w-full h-full rounded-3xl overflow-hidden relative">
+                <img src="assets/images/Mountains-Nepal-II.jpg" alt="Mountains of Nepal"
+                    class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+            </div>
+            <!-- Tooltip -->
+            <span
+                class="absolute bottom-4 left-4 z-20 text-white/80 text-xs font-light tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                Credit: trekroute.com
+            </span>
         </div>
 
         <!-- Card 5: Tilted Left -->
-        <div
-            class="relative w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex-shrink-0 transform -rotate-2">
-
-            <img src="assets/images/nepal boudhanath stupa.jpg" alt="Nepal Boudhanath stupa"
-                class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+        <div class="group relative w-64 h-80 shadow-2xl border border-white/5 flex-shrink-0 transform -rotate-2">
+            <!-- Image Wrapper to clip corners safely -->
+            <div class="w-full h-full rounded-3xl overflow-hidden relative">
+                <img src="assets/images/nepal boudhanath stupa.jpg" alt="Nepal Boudhanath stupa"
+                    class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+            </div>
+            <!-- Tooltip -->
+            <span
+                class="absolute bottom-4 left-4 z-20 text-white/80 text-xs font-light tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                Credit: nepaltraveller.com
+            </span>
         </div>
 
     </div>
@@ -157,11 +221,13 @@
 <!-- My projects -->
 <div class="project section py-12">
 
-    <!-- Section Header (Gap reduced here) -->
+    <!-- Section Header (Dynamic Light/Dark states) -->
     <div class="mb-6 md:mb-8">
-        <h2 class="font-sans text-3xl md:text-4xl font-bold text-white mb-3">Featured Projects</h2>
-        <p class="font-body text-gray-400 text-base md:text-lg">Production systems I've designed, built, and
-            shipped.</p>
+        <h2
+            class="font-sans text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 transition-colors duration-300">
+            Featured Projects</h2>
+        <p class="font-body text-gray-600 dark:text-gray-400 text-base md:text-lg transition-colors duration-300">
+            Production systems I've designed, built, and shipped.</p>
     </div>
 
     <!-- Projects Grid -->
@@ -169,14 +235,16 @@
 
         <!-- Project 1 -->
         <a href="#"
-            class="cursor-pointer hover:bg-red-950/40 p-8 rounded-2xl flex flex-col h-full border border-gray-800/20 group transition-colors duration-300">
-            <h3 class="font-sans text-xl font-bold text-white mb-4">merojob</h3>
-            <p class="font-body text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
+            class="cursor-pointer bg-transparent hover:bg-slate-100 dark:hover:bg-neutral-800/40 p-8 rounded-2xl flex flex-col h-full border border-gray-200/60 dark:border-gray-800/20 group transition-colors duration-300">
+            <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">
+                merojob</h3>
+            <p
+                class="font-body text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-grow transition-colors duration-300">
                 Nepal's #1 job portal — a high-traffic, full-stack platform handling thousands of daily job
                 seekers and employers. Built and maintained core backend services for scalable performance.
             </p>
             <div
-                class="text-teal-500 group-hover:text-emerald-400 text-sm font-medium inline-flex items-center transition-colors mt-auto w-max">
+                class="text-teal-600 dark:text-teal-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 text-sm font-medium inline-flex items-center transition-colors mt-auto w-max">
                 merojob.com
                 <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">
@@ -184,16 +252,20 @@
                 </svg>
             </div>
         </a>
+
+
         <!-- Project 2 -->
-        <a href="#"
-            class="cursor-pointer hover:bg-red-950/40 p-8 rounded-2xl flex flex-col h-full border border-gray-800/20 group transition-colors duration-300">
-            <h3 class="font-sans text-xl font-bold text-white mb-4">merojob</h3>
-            <p class="font-body text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
+       <a href="#"
+            class="cursor-pointer bg-transparent hover:bg-slate-100 dark:hover:bg-neutral-800/40 p-8 rounded-2xl flex flex-col h-full border border-gray-200/60 dark:border-gray-800/20 group transition-colors duration-300">
+            <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">
+                merojob</h3>
+            <p
+                class="font-body text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-grow transition-colors duration-300">
                 Nepal's #1 job portal — a high-traffic, full-stack platform handling thousands of daily job
                 seekers and employers. Built and maintained core backend services for scalable performance.
             </p>
             <div
-                class="text-teal-500 group-hover:text-emerald-400 text-sm font-medium inline-flex items-center transition-colors mt-auto w-max">
+                class="text-teal-600 dark:text-teal-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 text-sm font-medium inline-flex items-center transition-colors mt-auto w-max">
                 merojob.com
                 <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">
@@ -204,14 +276,16 @@
 
         <!-- Project 3 -->
         <a href="#"
-            class="cursor-pointer hover:bg-red-950/40 p-8 rounded-2xl flex flex-col h-full border border-gray-800/20 group transition-colors duration-300">
-            <h3 class="font-sans text-xl font-bold text-white mb-4">merojob</h3>
-            <p class="font-body text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
+            class="cursor-pointer bg-transparent hover:bg-slate-100 dark:hover:bg-neutral-800/40 p-8 rounded-2xl flex flex-col h-full border border-gray-200/60 dark:border-gray-800/20 group transition-colors duration-300">
+            <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">
+                merojob</h3>
+            <p
+                class="font-body text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-grow transition-colors duration-300">
                 Nepal's #1 job portal — a high-traffic, full-stack platform handling thousands of daily job
                 seekers and employers. Built and maintained core backend services for scalable performance.
             </p>
             <div
-                class="text-teal-500 group-hover:text-emerald-400 text-sm font-medium inline-flex items-center transition-colors mt-auto w-max">
+                class="text-teal-600 dark:text-teal-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 text-sm font-medium inline-flex items-center transition-colors mt-auto w-max">
                 merojob.com
                 <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">
@@ -222,10 +296,10 @@
 
     </div>
 
-    <!-- View All Projects Link Container (Perfectly left-aligned) -->
+    <!-- View All Projects Link Container -->
     <div class="mt-12">
         <a href="#"
-            class="text-emerald-500 hover:text-emerald-400 text-sm font-medium inline-flex items-center group transition-colors">
+            class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 font-medium text-sm inline-flex items-center group transition-colors">
             View all projects
             <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
@@ -238,124 +312,135 @@
 
 <!-- Core Services -->
 <div class="core-services section py-16">
-    <!-- Section Header -->
+    <!-- Section Header (Dynamic Light/Dark states) -->
     <div class="mb-6 md:mb-8">
-        <h2 class="font-sans text-3xl md:text-4xl font-bold text-white mb-3">Core Services</h2>
-        <p class="font-body text-gray-400 text-base md:text-lg">What I bring to your engineering team or
-            project.</p>
+        <h2
+            class="font-sans text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 transition-colors duration-300">
+            Core Services</h2>
+        <p class="font-body text-gray-600 dark:text-gray-400 text-base md:text-lg transition-colors duration-300">What I
+            bring to your engineering team or project.</p>
     </div>
 
     <!-- Core Services Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
         <!-- Backend Architecture Card 1 -->
-        <div class="bg-[#424552] p-8 rounded-2xl flex flex-col h-full border border-gray-800/30">
+        <div
+            class="bg-white dark:bg-[#424552] p-8 rounded-2xl flex flex-col h-full border border-gray-200/80 dark:border-gray-800/30 shadow-sm dark:shadow-none transition-colors duration-300">
             <!-- Top Icon Badge -->
             <div
-                class="w-12 h-12 rounded-xl border border-gray-700/50 flex items-center justify-center mb-6 bg-transparent">
+                class="w-12 h-12 rounded-xl border border-gray-200 dark:border-gray-700/50 flex items-center justify-center mb-6 bg-gray-50 dark:bg-transparent transition-colors duration-300">
                 <!-- Database SVG Icon -->
-                <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    stroke-width="2">
+                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4" />
                 </svg>
             </div>
 
             <!-- Title -->
-            <h3 class="font-sans text-xl font-bold text-white mb-2">Backend Architecture</h3>
+            <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">
+                Backend Architecture</h3>
 
             <!-- Inline Tech Stack (with dots) -->
             <div class="font-body text-sm font-medium mb-4 flex flex-wrap gap-1.5 items-center">
-                <span class="text-teal-500">Python</span>
-                <span class="text-emerald-500/50 font-bold">·</span>
-                <span class="text-teal-500">Django</span>
-                <span class="text-emerald-500/50 font-bold">·</span>
-                <span class="text-teal-500">PostgreSQL</span>
+                <span class="text-teal-600 dark:text-teal-400 transition-colors">Python</span>
+                <span class="text-emerald-600/50 dark:text-emerald-500/50 font-bold transition-colors">·</span>
+                <span class="text-teal-600 dark:text-teal-400 transition-colors">Django</span>
+                <span class="text-emerald-600/50 dark:text-emerald-500/50 font-bold transition-colors">·</span>
+                <span class="text-teal-600 dark:text-teal-400 transition-colors">PostgreSQL</span>
             </div>
 
             <!-- Description -->
-            <p class="font-body text-gray-400 text-sm leading-relaxed flex-grow">
+            <p
+                class="font-body text-gray-600 dark:text-gray-400 text-sm leading-relaxed flex-grow transition-colors duration-300">
                 Designing and shipping scalable REST APIs, background workers, and database schemas that handle
                 millions of requests with PostgreSQL and Django.
             </p>
         </div>
 
         <!-- Backend Architecture Card 2 -->
-        <div class="bg-[#424552] p-8 rounded-2xl flex flex-col h-full border border-gray-800/30">
+        <div
+            class="bg-white dark:bg-[#424552] p-8 rounded-2xl flex flex-col h-full border border-gray-200/80 dark:border-gray-800/30 shadow-sm dark:shadow-none transition-colors duration-300">
             <!-- Top Icon Badge -->
             <div
-                class="w-12 h-12 rounded-xl border border-gray-700/50 flex items-center justify-center mb-6 bg-transparent">
+                class="w-12 h-12 rounded-xl border border-gray-200 dark:border-gray-700/50 flex items-center justify-center mb-6 bg-gray-50 dark:bg-transparent transition-colors duration-300">
                 <!-- Database SVG Icon -->
-                <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    stroke-width="2">
+                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4" />
                 </svg>
             </div>
 
             <!-- Title -->
-            <h3 class="font-sans text-xl font-bold text-white mb-2">Backend Architecture</h3>
+            <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">
+                Backend Architecture</h3>
 
             <!-- Inline Tech Stack (with dots) -->
             <div class="font-body text-sm font-medium mb-4 flex flex-wrap gap-1.5 items-center">
-                <span class="text-teal-500">Python</span>
-                <span class="text-emerald-500/50 font-bold">·</span>
-                <span class="text-teal-500">Django</span>
-                <span class="text-emerald-500/50 font-bold">·</span>
-                <span class="text-teal-500">PostgreSQL</span>
+                <span class="text-teal-600 dark:text-teal-400 transition-colors">Python</span>
+                <span class="text-emerald-600/50 dark:text-emerald-500/50 font-bold transition-colors">·</span>
+                <span class="text-teal-600 dark:text-teal-400 transition-colors">Django</span>
+                <span class="text-emerald-600/50 dark:text-emerald-500/50 font-bold transition-colors">·</span>
+                <span class="text-teal-600 dark:text-teal-400 transition-colors">PostgreSQL</span>
             </div>
 
             <!-- Description -->
-            <p class="font-body text-gray-400 text-sm leading-relaxed flex-grow">
+            <p
+                class="font-body text-gray-600 dark:text-gray-400 text-sm leading-relaxed flex-grow transition-colors duration-300">
                 Designing and shipping scalable REST APIs, background workers, and database schemas that handle
                 millions of requests with PostgreSQL and Django.
             </p>
         </div>
 
         <!-- Backend Architecture Card 3 -->
-        <div class="bg-[#424552] p-8 rounded-2xl flex flex-col h-full border border-gray-800/30">
+        <div
+            class="bg-white dark:bg-[#424552] p-8 rounded-2xl flex flex-col h-full border border-gray-200/80 dark:border-gray-800/30 shadow-sm dark:shadow-none transition-colors duration-300">
             <!-- Top Icon Badge -->
             <div
-                class="w-12 h-12 rounded-xl border border-gray-700/50 flex items-center justify-center mb-6 bg-transparent">
+                class="w-12 h-12 rounded-xl border border-gray-200 dark:border-gray-700/50 flex items-center justify-center mb-6 bg-gray-50 dark:bg-transparent transition-colors duration-300">
                 <!-- Database SVG Icon -->
-                <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    stroke-width="2">
+                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4" />
                 </svg>
             </div>
 
             <!-- Title -->
-            <h3 class="font-sans text-xl font-bold text-white mb-2">Backend Architecture</h3>
+            <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">
+                Backend Architecture</h3>
 
             <!-- Inline Tech Stack (with dots) -->
             <div class="font-body text-sm font-medium mb-4 flex flex-wrap gap-1.5 items-center">
-                <span class="text-teal-500">Python</span>
-                <span class="text-emerald-500/50 font-bold">·</span>
-                <span class="text-teal-500">Django</span>
-                <span class="text-emerald-500/50 font-bold">·</span>
-                <span class="text-teal-500">PostgreSQL</span>
+                <span class="text-teal-600 dark:text-teal-400 transition-colors">Python</span>
+                <span class="text-emerald-600/50 dark:text-emerald-500/50 font-bold transition-colors">·</span>
+                <span class="text-teal-600 dark:text-teal-400 transition-colors">Django</span>
+                <span class="text-emerald-600/50 dark:text-emerald-500/50 font-bold transition-colors">·</span>
+                <span class="text-teal-600 dark:text-teal-400 transition-colors">PostgreSQL</span>
             </div>
 
             <!-- Description -->
-            <p class="font-body text-gray-400 text-sm leading-relaxed flex-grow">
+            <p
+                class="font-body text-gray-600 dark:text-gray-400 text-sm leading-relaxed flex-grow transition-colors duration-300">
                 Designing and shipping scalable REST APIs, background workers, and database schemas that handle
                 millions of requests with PostgreSQL and Django.
             </p>
         </div>
 
     </div>
-
-
-
 </div>
+
 
 <!-- Articles Wrapper -->
 <div class="w-full articles-section py-12">
 
     <!-- Section Header (Decreased bottom gap to lock tightly with the content below) -->
     <div class="mb-6 md:mb-8">
-        <h2 class="font-sans text-3xl md:text-4xl font-bold text-white mb-3">Latest Writing</h2>
+        <h2
+            class="font-sans text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 transition-colors duration-300">
+            Latest Writing</h2>
     </div>
 
     <!-- Main 2-Column Grid Container -->
@@ -400,7 +485,6 @@
             </article>
 
             <!-- Article 2 -->
-            <!-- Article 1 with Diagonal Link Icon -->
             <article class="group relative flex flex-col items-start">
                 <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
                     <div
@@ -436,7 +520,6 @@
             </article>
 
             <!-- Article 3 -->
-            <!-- Article 1 with Diagonal Link Icon -->
             <article class="group relative flex flex-col items-start">
                 <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
                     <div
@@ -472,7 +555,6 @@
             </article>
 
             <!-- Article 4 -->
-            <!-- Article 1 with Diagonal Link Icon -->
             <article class="group relative flex flex-col items-start">
                 <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
                     <div
@@ -523,60 +605,51 @@
 
 
         </div>
+<!-- Right Column Panel: Work Experience Box -->
+<div class="lg:col-span-1 bg-white dark:bg-[#343742]/40 border border-gray-200/80 dark:border-gray-700/40 p-6 rounded-3xl shadow-sm dark:shadow-inner transition-colors duration-300">
 
-        <!-- Right Column Panel -->
-        <!-- Right Column Panel: Work Experience Box -->
-        <div class="lg:col-span-1 bg-[#161616] border border-zinc-800/60 p-6 rounded-3xl">
-
-            <!-- Header with Briefcase Icon -->
-            <div class="flex items-center gap-3 mb-6">
-                <div class="text-zinc-400">
-                    <!-- Briefcase SVG Icon -->
-                    <svg class="w-5 h-5 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M20.25 14.15v4.25c0 .552-.448 1-1 1H4.75c-.552 0-1-.448-1-1v-4.25m16.5 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 14.15m17.25 0c-.267-.034-.539-.05-.814-.05H4.564c-.275 0-.547.016-.814.05M16.5 7.5V6.25a2.25 2.25 0 00-2.25-2.25h-4.5A2.25 2.25 0 007.5 6.25V7.5m9 0H7.5" />
-                    </svg>
-                </div>
-                <h3 class="text-sm font-semibold text-white tracking-wide">Work Experience</h3>
-            </div>
-
-            <!-- Job List Timeline Container -->
-            <div class="space-y-6 mb-6">
-
-                <!-- Job Entry 1: merojob -->
-                <div class="flex items-center justify-between gap-4">
-                    <div class="flex items-center gap-4">
-                        <!-- Circular Company Logo Wrapper -->
-                        <div
-                            class="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0 border border-zinc-800/10 p-1">
-                            <!-- Replace with your actual image path or <img> tag -->
-                            <span class="text-xs font-bold text-blue-900 tracking-tighter">mj</span>
-                        </div>
-                        <!-- Title & Role Info -->
-                        <div class="flex flex-col">
-                            <span class="text-sm font-semibold text-white leading-tight">merojob</span>
-                            <span class="text-xs text-teal-500 mt-0.5">Senior Full Stack Developer</span>
-                        </div>
-                    </div>
-                    <!-- Timeline Date Placement -->
-                    <span class="text-xs font-medium text-zinc-500 whitespace-nowrap">2021 — Present</span>
-                </div>
-
-            </div>
-
-            <!-- Download CV Button Box -->
-            <a href="/resume.pdf" download
-                class="group w-full inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium py-3 px-4 bg-zinc-800/40 hover:bg-zinc-800/80 active:bg-zinc-800 text-zinc-200 border border-zinc-700/30 hover:border-zinc-700/50 transition-all duration-200">
-                Download CV
-
-                <!-- Cleaned up SVG (Custom animation trigger class placed directly here) -->
-                <svg class="w-3.5 h-3.5 stroke-[2.5] animate-drop-twice transition-transform duration-200" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
-                </svg>
-            </a>
-
+    <!-- Header with Briefcase Icon -->
+    <div class="flex items-center gap-3 mb-6">
+        <div class="text-gray-500 dark:text-teal-400 transition-colors duration-300">
+            <!-- Briefcase SVG Icon -->
+            <svg class="w-5 h-5 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 .552-.448 1-1 1H4.75c-.552 0-1-.448-1-1v-4.25m16.5 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 14.15m17.25 0c-.267-.034-.539-.05-.814-.05H4.564c-.275 0-.547.016-.814.05M16.5 7.5V6.25a2.25 2.25 0 00-2.25-2.25h-4.5A2.25 2.25 0 007.5 6.25V7.5m9 0H7.5" />
+            </svg>
         </div>
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-white tracking-wide transition-colors duration-300">Work Experience</h3>
+    </div>
+
+    <!-- Job List Timeline Container -->
+    <div class="space-y-6 mb-6">
+        <!-- Job Entry 1: merojob -->
+        <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <!-- Circular Company Logo Wrapper -->
+                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0 border border-gray-200 dark:border-gray-600/50 p-1 transition-colors duration-300">
+                    <span class="text-xs font-bold text-blue-900 tracking-tighter">mj</span>
+                </div>
+                <!-- Title & Role Info -->
+                <div class="flex flex-col">
+                    <span class="text-sm font-semibold text-gray-900 dark:text-white leading-tight transition-colors duration-300">merojob</span>
+                    <span class="text-xs text-teal-600 dark:text-teal-400 mt-0.5 font-medium transition-colors duration-300">Senior Full Stack Developer</span>
+                </div>
+            </div>
+            <!-- Timeline Date Placement -->
+            <span class="text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap transition-colors duration-300">2021 — Present</span>
+        </div>
+    </div>
+
+    <!-- Download CV Button Box -->
+    <a href="/resume.pdf" download
+        class="group w-full inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium py-3 px-4 bg-gray-100 hover:bg-gray-200/80 dark:bg-neutral-800/60 dark:hover:bg-neutral-800 dark:text-zinc-200 border border-gray-300/60 dark:border-gray-700/50 hover:border-gray-400 dark:hover:border-gray-600 transition-all duration-200">
+        Download CV
+        <svg class="w-3.5 h-3.5 stroke-[2.5] animate-drop-twice transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+        </svg>
+    </a>
+</div>
+
+
 
 
     </div>
