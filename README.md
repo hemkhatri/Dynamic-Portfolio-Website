@@ -6,7 +6,7 @@
 
 A high-performance, lightweight, and modern **dynamic PHP portfolio website template** featuring a native blogging architecture. Built explicitly for software engineers, web developers, and full-stack creators who want a fast, SEO-optimized personal website without relying on heavy frameworks.
 
-🎯 **Live Demo:** [hemkhatri.com.np](https://hemkhatri.com.np)
+🎯 <b>Live Demo:</b> <a href="https://hemkhatri.com.np" target="_blank" rel="noopener noreferrer">hemkhatri.com.np</a>
 
 ---
 
