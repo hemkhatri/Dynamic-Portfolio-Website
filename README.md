@@ -1,9 +1,5 @@
 # 🚀 Dynamic PHP Portfolio Website & Blogging Engine (v1.0.0)
 
-[![GitHub license](https://shields.io)](LICENSE)
-[![GitHub stars](https://shields.io)](https://github.com)
-[![GitHub forks](https://shields.io)](https://github.com)
-
 A high-performance, lightweight, and modern **dynamic PHP portfolio website template** featuring a native blogging architecture. Built explicitly for software engineers, web developers, and full-stack creators who want a fast, SEO-optimized personal website without relying on heavy frameworks.
 
 🎯 <b>Live Demo:</b> <a href="https://hemkhatri.com.np" target="_blank" rel="noopener noreferrer">hemkhatri.com.np</a>
