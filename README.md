@@ -21,8 +21,7 @@ A high-performance, lightweight, and modern **dynamic PHP portfolio website temp
 
 ### ✍️ Dynamic Blog Archive (`blogs.php`)
 <!-- Add your second screenshot placeholder here -->
-![PHP Custom Blogging Engine Layout](screenshots/blog-preview.png)
-
+<img width="1917" height="913" alt="blog-page-ss" src="https://github.com/user-attachments/assets/dde1708c-8eb5-4edd-b93a-dc31054ac2dd" />
 ---
 
 ## 🔥 Key Technical Features
