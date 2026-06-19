@@ -1,4 +1,4 @@
-# 🚀 Dynamic PHP Portfolio Website & Blogging Engine (v1.0.0)
+# 🚀 Dynamic PHP Portfolio Website & Blogging Engine (v1.0.1)
 
 A high-performance, lightweight, and modern **dynamic PHP portfolio website template** featuring a native blogging architecture. Built explicitly for software engineers, web developers, and full-stack creators who want a fast, SEO-optimized personal website without relying on heavy frameworks.
 
@@ -7,17 +7,21 @@ A high-performance, lightweight, and modern **dynamic PHP portfolio website temp
 ---
 
 ## 📸 Project Previews & Screenshots
----
 ## Desktop View
 ### 🖥️ Homepage Interface
 <!-- Replace the path below once you upload your screenshot to your repository -->
-<img width="1914" height="910" alt="Desktop-home-page-image" src="https://github.com/user-attachments/assets/76802de7-26fa-4a8c-8d12-0792ded725a8" />
-<img width="1919" height="898" alt="image" src="https://github.com/user-attachments/assets/08a91f2a-9286-4d8e-9e94-49172e3c4964" />
-<img width="1919" height="881" alt="image" src="https://github.com/user-attachments/assets/03babe40-fd1c-4cf0-b1c2-806533577c2c" />
+<img width="1900" height="895" alt="image" src="https://github.com/user-attachments/assets/f0a348cc-27c0-41a5-920e-9220830ee613" />
+<img width="1897" height="896" alt="image" src="https://github.com/user-attachments/assets/79edb0cd-a390-49aa-8430-ac6a2e2a53f3" />
+
+## Mobile View
+### 🖥️ Homepage Interface
+<img width="367" height="826" alt="image" src="https://github.com/user-attachments/assets/b25aa85b-3e4a-43f5-9a65-bf691fd95566" />
+<img width="372" height="833" alt="image" src="https://github.com/user-attachments/assets/87f6fe9d-a7d1-4d3b-8f6b-eea88742ffc5" />
+
 
 ### ✍️ Dynamic Blog Archive (`blogs.php`)
 <!-- Add your second screenshot placeholder here -->
-<img width="1917" height="913" alt="blog-page-ss" src="https://github.com/user-attachments/assets/dde1708c-8eb5-4edd-b93a-dc31054ac2dd" />
+
 ---
 
 ## 🔥 Key Technical Features
