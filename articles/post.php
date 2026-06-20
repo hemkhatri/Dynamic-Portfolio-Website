@@ -1,77 +1,75 @@
 <?php
-// 1. Full database simulation array matrix (Matches your blogs data schema exactly)
-$blogs_data = [
-    "building-ai-agent-workflows-langgraph-django" => [
-        "title" => "Building AI Agent Workflows with LangGraph and Django",
-        "date" => "March 25, 2026",
-        "read_time" => "5 min read",
-        "category" => "AI Workflows",
-        "thumbnail" => "https://unsplash.com",
-        "content" => "
-            <p>Artificial Intelligence workflows are shifting from simple single-prompt completions to long-running, multi-agent state machines. Orchestrating these advanced state operations requires absolute persistence and task-handling robustness.</p>
-            <h3>Why LangGraph?</h3>
-            <p>LangGraph allows developers to design agent workflows as cyclic graphs. This enables complex loop operations, memory management cycles, and human-in-the-loop interaction layers that traditional linear chains cannot sustain cleanly.</p>
-            <h3>Integrating with Django</h3>
-            <p>While LangGraph handles the agent execution logic, Django acts as the powerful foundation system, taking charge of:</p>
-            <ul>
-                <li><strong>State Persistence:</strong> Saving complete graph step matrices safely using PostgreSQL JSONB schema metrics.</li>
-                <li><strong>Background Processing:</strong> Offloading heavy model queries safely into Celery task workers.</li>
-                <li><strong>API Operations:</strong> Exposing clear REST API endpoints to streaming client applications.</li>
-            </ul>
-        "
-    ],
-    "scaling-postgresql-queries-high-traffic" => [
-        "title" => "Scaling PostgreSQL Database Queries for High-Traffic Applications",
-        "date" => "February 12, 2026",
-        "read_time" => "8 min read",
-        "category" => "Database",
-        "thumbnail" => "https://unsplash.com",
-        "content" => "
-            <p>Sustaining millions of read and write requests per day demands strategic database optimizations beyond running simple queries.</p>
-            <h3>1. Intelligent Indexing Strategies</h3>
-            <p>Avoid blindly creating indexes across every single table column. Focus instead on composite or partial indexes designed to speed up specific high-traffic application lookup workflows.</p>
-            <h3>2. Connection Management with PgBouncer</h3>
-            <p>PostgreSQL spawns an independent backend process for every single inbound connection. By dropping a connection pooler like PgBouncer directly in front of your database instances, you can reuse active pipelines and slash massive server CPU load spikes.</p>
-        "
-    ],
-    "merojob-backend-zero-downtime-migration" => [
-        "title" => "How We Engineered Merojob Backend for Zero-Downtime Migration",
-        "slug" => "merojob-backend-zero-downtime-migration",
-        "date" => "January 05, 2026",
-        "read_time" => "6 min read",
-        "category" => "Backend",
-        "thumbnail" => "https://unsplash.com",
-        "content" => "
-            <p>When operating a market-dominant job portal handling massive live traffic loads, downtime translates to lost business for employers and job seekers alike. Migrating our database required careful architectural execution.</p>
-            <h3>The Strategy: Dual-Write Isolation Pipeline</h3>
-            <p>Instead of throwing the database offline, we structured a dual-write mechanism. Active records written on our platform populated both legacy and modern target tables concurrently while background processing workers synchronized historical records safely in the background.</p>
-        "
-    ]
-];
+// 1. FORCE XAMPP TO SHOW ERRORS (Prevents blank screens)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// 2. Safely capture the inbound URL token parameter 
+// 2. Load your Blogger API connection
+require_once dirname(__DIR__) . '/blogger_api.php';
+
+// 3. Fetch the raw posts matrix payload
+$raw_payload = fetch_blogger_data('posts?maxResults=50&', 'posts_cache.json');
+
+// 4. Safely capture the inbound URL token parameter 
 $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
-// 3. Fallback routing redirect logic if requested token is invalid or blank
-if (empty($slug) || !array_key_exists($slug, $blogs_data)) {
-    header("Location: blogs.php");
+// 5. Fallback routing if the requested token is invalid or blank
+if (empty($slug)) {
+    header("Location: ../blogs.php");
     exit;
 }
 
-// 4. Extract targeted post payload dimensions
-$article = $blogs_data[$slug];
+// 6. Extract and format items using your core array formatter matrix
+$formatted_posts = [];
+if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items'])) {
+    $formatted_posts = format_blogger_posts($raw_payload['items']);
+}
 
-// 5. Mount site layouts 
+// 7. Search the formatted array matrix for the specific post matching the slug
+$article = null;
+if (!empty($formatted_posts)) {
+    foreach ($formatted_posts as $post) {
+        if (isset($post['slug']) && $post['slug'] === $slug) {
+            $article = $post;
+            break;
+        }
+    }
+}
+
+// 8. If no post matched, redirect up to the actual root level blogs.php
+if (!$article) {
+    header("Location: ../blogs.php");
+    exit;
+}
+
+// --- DYNAMIC DATA PREPARATION ---
+
+// Calculate Read Time dynamically (assumes ~200 words per minute reading speed)
+$word_count = str_word_count(strip_tags($article['content'] ?? ''));
+$read_time_minutes = max(1, ceil($word_count / 200)); 
+$read_time = $read_time_minutes . " min read";
+
+// FIX: Use 'category_name' directly from your clean formatted array
+$category = !empty($article['category_name']) ? $article['category_name'] : 'Article';
+
+// Handle Thumbnail: Use the 'image' key from the formatted array
+$thumbnail = !empty($article['image']) ? $article['image'] : 'https://unsplash.com'; 
+
+// 9. Mount site layouts 
 $pageTitle = $article['title'] . " - Hem B. Khatri";
-include "../includes/header.php";
+
+// Safety Check: Include header file only if it exists to avoid include-errors
+if (file_exists("../includes/header.php")) {
+    include "../includes/header.php";
+} else {
+    echo "<style>body { background: #0b0f19; color: white; font-family: sans-serif; padding: 40px; }</style>";
+}
 ?>
 
-<!-- Article Wrapper Layout Container -->
 <div class="w-full max-w-3xl mx-auto py-4">
 
-    <!-- Go Back Link Navigation Navigation -->
     <div class="mb-8 -ml-4 sm:-ml-6 pl-4 sm:pl-6">
-        <a href="blogs.php" class="inline-flex items-center text-sm font-medium text-teal-500 hover:text-teal-400 transition-colors group">
+        <a href="../blogs.php" class="inline-flex items-center text-sm font-medium text-teal-500 hover:text-teal-400 transition-colors group">
             <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -79,24 +77,21 @@ include "../includes/header.php";
         </a>
     </div>
 
-    <!-- Article Core Header Context Block Layout Alignment -->
     <div class="mb-8 border-b border-gray-800 pb-8 -ml-4 sm:-ml-6 pl-4 sm:pl-6">
         
-        <!-- Metadata Inline Row Array Elements -->
         <div class="mb-4 flex flex-wrap items-center gap-2 text-xs text-gray-500 font-body">
             <time class="flex items-center pl-3.5 relative">
                 <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
                     <span class="h-3 w-0.5 rounded-full bg-gray-700"></span>
                 </span>
-                <?php echo $article['date']; ?>
+                <?php echo $article['created_at']; ?>
             </time>
             <span class="text-gray-700">•</span>
-            <span><?php echo $article['read_time']; ?></span>
+            <span><?php echo $read_time; ?></span>
             <span class="text-gray-700">•</span>
             
-            <!-- Enterprise Styled Verified Category Pill Component -->
             <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider text-[#009688] bg-[#009688]/10 border border-[#009688]/20 backdrop-blur-sm shadow-sm shadow-[#009688]/5">
-                <?php echo $article['category']; ?>
+                <?php echo $category; ?>
             </span>
         </div>
 
@@ -105,12 +100,10 @@ include "../includes/header.php";
         </h1>
     </div>
 
-    <!-- Full-Width Landscape Post Feature Banner Graphic Image Box -->
     <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-gray-800 bg-gray-900/40 mb-10 shadow-2xl">
-        <img src="<?php echo $article['thumbnail']; ?>" alt="<?php echo $article['title']; ?>" class="w-full h-full object-cover">
+        <img src="<?php echo $thumbnail; ?>" alt="<?php echo $article['title']; ?>" class="w-full h-full object-cover">
     </div>
 
-    <!-- Dynamic Prose Content Area Box (Injects formatted semantic markdown HTML arrays securely) -->
     <article class="font-body text-gray-300 text-base leading-relaxed space-y-6 
                     prose prose-invert max-w-none
                     prose-headings:font-headline prose-headings:font-bold prose-headings:text-white prose-headings:tracking-tight
@@ -123,4 +116,8 @@ include "../includes/header.php";
 
 </div>
 
-<?php include "../includes/footer.php"; ?>
+<?php 
+if (file_exists("../includes/footer.php")) {
+    include "../includes/footer.php"; 
+}
+?>
