@@ -34,25 +34,25 @@
 <div class="fixed bottom-5 right-5 z-[99999] font-sans antialiased">
 
     <!-- 1. Floating AI Chat Logo Button -->
-    <button id="chat-toggle-btn" onclick="toggleChatWindow()"
-        class="flex h-14 w-14 items-center justify-center rounded-full bg-brandPrimary text-white shadow-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 focus:outline-none">
-        <!-- Replace this comment with your custom SVG directly -->
-        <span id="toggle-icon-open" class="block">
-            <!-- Example Chat Icon SVG -->
-            <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-            </svg>
-        </span>
-        <span id="toggle-icon-close" class="hidden">
-            <!-- Close Icon SVG -->
-            <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </span>
-    </button>
+<button id="chat-toggle-btn" onclick="toggleChatWindow()"
+    class="flex h-16 w-16 items-center justify-center rounded-full bg-[#ffffff] dark:bg-brandNeutral text-brandNeutral dark:text-white shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(0,150,136,0.4)] hover:shadow-[0_0_25px_rgba(0,150,136,0.6)] transition-all duration-300 transform hover:scale-105 focus:outline-none">
+    
+    <span id="toggle-icon-open" class="block">
+        <!-- AI Assistant Icon -->
+        <img src="assets/icons/ai_assistant_icon.svg" alt="AI Assistant" class="w-8 h-8 block dark:hidden" />
+        <img src="assets/icons/ai_assistant_icon.svg" alt="AI Assistant" class="w-8 h-8 hidden dark:block invert" />
+    </span>
+    
+    <span id="toggle-icon-close" class="hidden">
+        <!-- Close Icon SVG -->
+        <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+            class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </span>
+</button>
+
+
 
     <!-- 2. Chat Window Panel (Hidden by default, styled according to your design parameters) -->
     <div id="ai-chat-window"
@@ -78,7 +78,8 @@
             class="h-80 overflow-y-auto p-4 space-y-4 font-body text-sm bg-slate-50 dark:bg-slate-900/40">
             <div
                 class="max-w-[85%] bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 p-3 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-700/50 shadow-sm leading-relaxed">
-                👋 Hello! I am HemLex's AI Assistant. How can I help you explore his portfolio, projects, or technical skills today?
+                👋 Hello! I am HemLex's AI Assistant. How can I help you explore his portfolio, projects, or technical
+                skills today?
             </div>
         </div>
 
