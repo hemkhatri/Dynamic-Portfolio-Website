@@ -85,7 +85,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 </head>
 
-<body hx-boost="true" hx-target="#main-content" hx-select="#main-content" class="bg-white dark:bg-black min-h-screen font-body flex flex-col transition-colors duration-300">
+<body hx-boost="true" hx-target="#main-content" hx-select="#main-content"
+    class="bg-white dark:bg-black min-h-screen font-body flex flex-col transition-colors duration-300">
 
     <!-- Header Component (Main container is fully invisible/naked) -->
     <header id="main-header"

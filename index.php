@@ -1,4 +1,18 @@
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/header.php';
+// 1. Fetch the latest 4 posts at the top of your index.php file
+require_once __DIR__ . '/blogger_api.php';
+
+// 1. Fire the pipeline request
+$endpoint = "posts?maxResults=10&";
+$cache_filename = "posts_cache.json";
+$raw_payload = fetch_blogger_data($endpoint, $cache_filename);
+
+// 2. CRITICAL FIX: Ensure 'items' exists, is an array, and assign it cleanly to $latest_posts
+$latest_posts = [];
+if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items'])) {
+    $latest_posts = format_blogger_posts($raw_payload['items']);
+}
+?>
 <style>
     @layer utilities {
         .no-scrollbar::-webkit-scrollbar {
@@ -436,164 +450,72 @@
 <!-- Articles Wrapper -->
 <div class="w-full articles-section py-12">
 
-    <!-- Section Header (Decreased bottom gap to lock tightly with the content below) -->
     <div class="mb-6 md:mb-8">
         <h2
             class="font-sans text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 transition-colors duration-300">
             Latest Writing</h2>
     </div>
 
-    <!-- Main 2-Column Grid Container -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start w-full">
 
-        <!-- Left Column: 4 Articles -->
-        <div class="lg:col-span-1 flex flex-col gap-12">
+        <div class="md:col-span-1 flex flex-col gap-12">
 
-            <!-- Article 1 with Diagonal Link Icon -->
-            <article class="group relative flex flex-col items-start">
-                <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
-                    <div
-                        class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl">
-                    </div>
-                    <a href="/articles/building-ai-agent-workflows-langgraph-django">
-                        <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                        <span class="relative z-10">Building AI Agent Workflows with LangGraph and Django</span>
-                    </a>
-                </h2>
-                <time
-                    class="relative z-10 order-first mb-3 flex items-center text-sm text-zinc-400 dark:text-zinc-500 pl-3.5"
-                    datetime="2026-03-25">
-                    <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
-                        <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
-                    </span>
-                    March 25, 2026
-                </time>
-                <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                    A technical deep-dive into building production-grade AI agent workflows using LangGraph for
-                    orchestration and Django for persistence, background tasks, and API exposure.
-                </p>
-                <div aria-hidden="true" class="relative z-10 mt-4 flex items-center text-sm font-medium text-teal-500">
-                    Read article
-                    <!-- Diagonal Go To Link SVG Icon -->
-                    <svg viewBox="0 0 20 20" fill="currentColor"
-                        class="ml-1 h-4 w-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
-                        <path fill-rule="evenodd"
-                            d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </div>
-            </article>
+            <?php
+            // 1. Slice the array matrix to keep only the first 5 entries
+            $display_posts = is_array($latest_posts) ? array_slice($latest_posts, 0, 5) : [];
 
-            <!-- Article 2 -->
-            <article class="group relative flex flex-col items-start">
-                <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
-                    <div
-                        class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl">
-                    </div>
-                    <a href="/articles/building-ai-agent-workflows-langgraph-django">
-                        <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                        <span class="relative z-10">Building AI Agent Workflows with LangGraph and Django</span>
-                    </a>
-                </h2>
-                <time
-                    class="relative z-10 order-first mb-3 flex items-center text-sm text-zinc-400 dark:text-zinc-500 pl-3.5"
-                    datetime="2026-03-25">
-                    <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
-                        <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
-                    </span>
-                    March 25, 2026
-                </time>
-                <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                    A technical deep-dive into building production-grade AI agent workflows using LangGraph for
-                    orchestration and Django for persistence, background tasks, and API exposure.
-                </p>
-                <div aria-hidden="true" class="relative z-10 mt-4 flex items-center text-sm font-medium text-teal-500">
-                    Read article
-                    <!-- Diagonal Go To Link SVG Icon -->
-                    <svg viewBox="0 0 20 20" fill="currentColor"
-                        class="ml-1 h-4 w-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
-                        <path fill-rule="evenodd"
-                            d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </div>
-            </article>
+            // 2. Loop safely through the sliced array matrix
+            if (!empty($display_posts)):
+                foreach ($display_posts as $post):
+                    // Safety guard: skip iteration if for any reason a broken string leaks into the loop
+                    if (!is_array($post))
+                        continue;
 
-            <!-- Article 3 -->
-            <article class="group relative flex flex-col items-start">
-                <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
-                    <div
-                        class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl">
-                    </div>
-                    <a href="/articles/building-ai-agent-workflows-langgraph-django">
-                        <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                        <span class="relative z-10">Building AI Agent Workflows with LangGraph and Django</span>
-                    </a>
-                </h2>
-                <time
-                    class="relative z-10 order-first mb-3 flex items-center text-sm text-zinc-400 dark:text-zinc-500 pl-3.5"
-                    datetime="2026-03-25">
-                    <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
-                        <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
-                    </span>
-                    March 25, 2026
-                </time>
-                <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                    A technical deep-dive into building production-grade AI agent workflows using LangGraph for
-                    orchestration and Django for persistence, background tasks, and API exposure.
-                </p>
-                <div aria-hidden="true" class="relative z-10 mt-4 flex items-center text-sm font-medium text-teal-500">
-                    Read article
-                    <!-- Diagonal Go To Link SVG Icon -->
-                    <svg viewBox="0 0 20 20" fill="currentColor"
-                        class="ml-1 h-4 w-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
-                        <path fill-rule="evenodd"
-                            d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </div>
-            </article>
+                    // Convert the friendly date back to YYYY-MM-DD for the HTML datetime attribute
+                    $datetime_attr = date('Y-m-d', strtotime($post['created_at'] ?? 'now'));
+                    ?>
+                    <article class="group relative flex flex-col items-start">
+                        <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
+                            <div
+                                class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl">
+                            </div>
+                            <a href="post.php?slug=<?php echo $post['slug']; ?>">
+                                <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                                <span class="relative z-10"><?php echo $post['title']; ?></span>
+                            </a>
+                        </h2>
+                        <time
+                            class="relative z-10 order-first mb-3 flex items-center text-sm text-zinc-400 dark:text-zinc-500 pl-3.5"
+                            datetime="<?php echo $datetime_attr; ?>">
+                            <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
+                                <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
+                            </span>
+                            <?php echo $post['created_at']; ?>
+                        </time>
+                        <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                            <?php echo $post['excerpt']; ?>
+                        </p>
+                        <div aria-hidden="true" class="relative z-10 mt-4 flex items-center text-sm font-medium text-teal-500">
+                            Read article
+                            <svg viewBox="0 0 20 20" fill="currentColor"
+                                class="ml-1 h-4 w-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
+                                <path fill-rule="evenodd"
+                                    d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </article>
+                    <?php
+                endforeach;
+            else:
+                ?>
+                <p class="text-zinc-500 dark:text-zinc-400">System logs are currently empty. Check back later.</p>
+            <?php endif; ?>
 
-            <!-- Article 4 -->
-            <article class="group relative flex flex-col items-start">
-                <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
-                    <div
-                        class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl">
-                    </div>
-                    <a href="/articles/building-ai-agent-workflows-langgraph-django">
-                        <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                        <span class="relative z-10">Building AI Agent Workflows with LangGraph and Django</span>
-                    </a>
-                </h2>
-                <time
-                    class="relative z-10 order-first mb-3 flex items-center text-sm text-zinc-400 dark:text-zinc-500 pl-3.5"
-                    datetime="2026-03-25">
-                    <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
-                        <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
-                    </span>
-                    March 25, 2026
-                </time>
-                <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                    A technical deep-dive into building production-grade AI agent workflows using LangGraph for
-                    orchestration and Django for persistence, background tasks, and API exposure.
-                </p>
-                <div aria-hidden="true" class="relative z-10 mt-4 flex items-center text-sm font-medium text-teal-500">
-                    Read article
-                    <!-- Diagonal Go To Link SVG Icon -->
-                    <svg viewBox="0 0 20 20" fill="currentColor"
-                        class="ml-1 h-4 w-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
-                        <path fill-rule="evenodd"
-                            d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </div>
-            </article>
-
-            <!-- Spacing container (Changed from mt-12 to mt-6) -->
             <div class="mt-6">
-                <a href="#"
+                <a href="blogs.php"
                     class="text-emerald-500 hover:text-emerald-400 text-sm font-medium inline-flex items-center group transition-colors">
-                    View all projects
+                    View all articles
                     <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -601,18 +523,14 @@
                 </a>
             </div>
 
-
-
-
         </div>
-        <!-- Right Column Panel: Work Experience Box -->
-        <div
-            class="lg:col-span-1 bg-white dark:bg-[#343742]/40 border border-gray-200/80 dark:border-gray-700/40 p-6 rounded-3xl shadow-sm dark:shadow-inner transition-colors duration-300">
 
-            <!-- Header with Briefcase Icon -->
+
+        <div
+            class="md:col-span-1 bg-white dark:bg-[#343742]/40 border border-gray-200/80 dark:border-gray-700/40 p-6 rounded-3xl shadow-sm dark:shadow-inner transition-colors duration-300">
+
             <div class="flex items-center gap-3 mb-6">
                 <div class="text-gray-500 dark:text-teal-400 transition-colors duration-300">
-                    <!-- Briefcase SVG Icon -->
                     <svg class="w-5 h-5 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M20.25 14.15v4.25c0 .552-.448 1-1 1H4.75c-.552 0-1-.448-1-1v-4.25m16.5 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 14.15m17.25 0c-.267-.034-.539-.05-.814-.05H4.564c-.275 0-.547.016-.814.05M16.5 7.5V6.25a2.25 2.25 0 00-2.25-2.25h-4.5A2.25 2.25 0 007.5 6.25V7.5m9 0H7.5" />
@@ -623,17 +541,13 @@
                     Work Experience</h3>
             </div>
 
-            <!-- Job List Timeline Container -->
             <div class="space-y-6 mb-6">
-                <!-- Job Entry 1: merojob -->
                 <div class="flex items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
-                        <!-- Circular Company Logo Wrapper -->
                         <div
                             class="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0 border border-gray-200 dark:border-gray-600/50 p-1 transition-colors duration-300">
                             <span class="text-xs font-bold text-blue-900 tracking-tighter">mj</span>
                         </div>
-                        <!-- Title & Role Info -->
                         <div class="flex flex-col">
                             <span
                                 class="text-sm font-semibold text-gray-900 dark:text-white leading-tight transition-colors duration-300">merojob</span>
@@ -642,14 +556,12 @@
                                 Full Stack Developer</span>
                         </div>
                     </div>
-                    <!-- Timeline Date Placement -->
                     <span
                         class="text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap transition-colors duration-300">2021
                         — Present</span>
                 </div>
             </div>
 
-            <!-- Download CV Button Box -->
             <a href="/resume.pdf" download
                 class="group w-full inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium py-3 px-4 bg-gray-100 hover:bg-gray-200/80 dark:bg-neutral-800/60 dark:hover:bg-neutral-800 dark:text-zinc-200 border border-gray-300/60 dark:border-gray-700/50 hover:border-gray-400 dark:hover:border-gray-600 transition-all duration-200">
                 Download CV
@@ -659,9 +571,6 @@
                 </svg>
             </a>
         </div>
-
-
-
 
     </div>
 </div>
