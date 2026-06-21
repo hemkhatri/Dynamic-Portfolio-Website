@@ -1,4 +1,4 @@
-# Contributing to Antigravity
+# Contributing to This Repo
 
 Thank you for choosing to contribute to the **Dynamic PHP Portfolio & Blogging Engine**! We welcome bug reports, feature suggestions, code contributions, and documentation improvements.
 
