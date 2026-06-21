@@ -15,14 +15,18 @@ A high-performance, lightweight, and modern **dynamic PHP portfolio website and 
 
 ## 📸 Project Previews & Screenshots
 
-### 🖥️ Desktop View (Dark Mode)
-<img width="1900" height="895" alt="Desktop Homepage Interface" src="https://github.com/user-attachments/assets/f0a348cc-27c0-41a5-920e-9220830ee613" />
-<img width="1897" height="896" alt="Desktop Projects & Skills Grid" src="https://github.com/user-attachments/assets/79edb0cd-a390-49aa-8430-ac6a2e2a53f3" />
+### 🖥️ Desktop View 
+(Dark Mode)
+<img width="1903" height="1079" alt="Desktop Projects & Skills Grid | Day Theme" src="https://github.com/user-attachments/assets/aa7247d4-e577-435b-93a7-12a86ff10e14" />
+(White Mode)
+<img width="1902" height="1079" alt="Desktop Projects & Skills Grid | Dark Theme" src="https://github.com/user-attachments/assets/8bf32cc5-22b6-4304-8c7d-9f78c92d618d" />
+
 
 ### 📱 Mobile View (Responsive & Adaptive Layouts)
 <div align="center">
-  <img width="367" height="826" alt="Mobile Navigation" src="https://github.com/user-attachments/assets/b25aa85b-3e4a-43f5-9a65-bf691fd95566" style="margin-right: 15px;" />
-  <img width="372" height="833" alt="Mobile AI Chat Window" src="https://github.com/user-attachments/assets/87f6fe9d-a7d1-4d3b-8f6b-eea88742ffc5" />
+  <img width="359" height="740" alt="image" src="https://github.com/user-attachments/assets/69b2f131-5345-4176-ace8-16c3d4303f58" />
+  <img width="359" height="737" alt="image" src="https://github.com/user-attachments/assets/5422d753-06c3-479a-9bbc-2a11d4ae6e4e" />
+
 </div>
 
 ---
