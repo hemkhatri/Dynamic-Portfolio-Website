@@ -1,6 +1,6 @@
 <?php include 'includes/header.php';
 // 1. Fetch the latest 4 posts at the top of your index.php file
-require_once __DIR__ . '/blogger_api.php';
+require_once __DIR__ . '/backend/blogger_post_handler.php';
 
 // 1. Fire the pipeline request
 $endpoint = "posts?maxResults=10&";

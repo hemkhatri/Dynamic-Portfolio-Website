@@ -20,7 +20,8 @@
 
         <!-- Right Side: Copyright Statement -->
         <p class="text-center sm:text-right text-gray-400 dark:text-zinc-500">
-            &copy; <?php echo date("Y"); ?> Hem B. Khatri
+            &copy;
+            <?php echo date("Y"); ?> Hem B. Khatri
         </p>
 
     </div>
@@ -31,74 +32,200 @@
 
 
 <!-- Visual Floating Interface Container -->
-<div class="fixed bottom-5 right-5 z-[99999] font-sans antialiased">
+<!-- Main Parent Container: Forces alignment symmetry on both desktop monitors and small mobile viewports -->
+<div class="fixed bottom-5 right-4 sm:right-5 z-[99999] font-sans antialiased">
 
     <!-- 1. Floating AI Chat Logo Button -->
-<button id="chat-toggle-btn" onclick="toggleChatWindow()"
-    class="flex h-16 w-16 items-center justify-center rounded-full bg-[#ffffff] dark:bg-brandNeutral text-brandNeutral dark:text-white shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(0,150,136,0.4)] hover:shadow-[0_0_25px_rgba(0,150,136,0.6)] transition-all duration-300 transform hover:scale-105 focus:outline-none">
-    
-    <span id="toggle-icon-open" class="block">
-        <!-- AI Assistant Icon -->
-        <img src="assets/icons/ai_assistant_icon.svg" alt="AI Assistant" class="w-8 h-8 block dark:hidden" />
-        <img src="assets/icons/ai_assistant_icon.svg" alt="AI Assistant" class="w-8 h-8 hidden dark:block invert" />
-    </span>
-    
-    <span id="toggle-icon-close" class="hidden">
-        <!-- Close Icon SVG -->
-        <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-            class="w-8 h-8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-    </span>
-</button>
+    <button id="chat-toggle-btn" onclick="toggleChatWindow()"
+        class="flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-brandNeutral text-brandNeutral dark:text-white shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(0,150,136,0.4)] hover:shadow-[0_0_25px_rgba(0,150,136,0.6)] transition-all duration-300 transform hover:scale-105 focus:outline-none">
+
+        <span id="toggle-icon-open" class="block">
+            <!-- AI Assistant Icon -->
+            <img src="assets/icons/ai_assistant_icon.svg" alt="AI Assistant" class="w-8 h-8 block dark:hidden" />
+            <img src="assets/icons/ai_assistant_icon.svg" alt="AI Assistant" class="w-8 h-8 hidden dark:block invert" />
+        </span>
+
+        <span id="toggle-icon-close" class="hidden">
+            <!-- Close Icon SVG -->
+            <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </span>
+    </button>
+
+</div>
 
 
+<!-- 2. Chat Window Panel (Hidden by default, styled according to your design parameters) -->
+<!-- Reconstructed Responsive Shell Component (Optimized layout boundaries for Mobile Viewports) -->
+<div id="ai-chat-window"
+    class="hidden fixed bottom-24 left-4 right-4 sm:left-auto sm:right-4 w-[calc(100%-32px)] sm:w-[380px] h-[60vh] sm:h-[520px] bg-white/40 dark:bg-slate-950/75 backdrop-blur-md border border-white/40 dark:border-slate-800/60 rounded-xl flex flex-col overflow-hidden transition-all duration-300 transform scale-95 origin-bottom-right shadow-[0_8px_32px_0_rgba(15,23,42,0.08)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] z-[99999]">
 
-    <!-- 2. Chat Window Panel (Hidden by default, styled according to your design parameters) -->
-    <div id="ai-chat-window"
-        class="hidden absolute bottom-20 right-0 w-[340px] sm:w-[360px] max-h-[500px] bg-white dark:bg-brandNeutral border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl flex-col overflow-hidden transition-all duration-300 transform scale-95 origin-bottom-right">
-
-        <!-- Header Section -->
-        <div class="bg-brandPrimary p-4 text-white flex items-center justify-between shadow-sm">
-            <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></div>
-                <span class="font-headline font-bold tracking-wide text-sm">Ask My Portfolio AI</span>
-            </div>
-            <!-- Secondary minimize button in panel header -->
-            <button onclick="toggleChatWindow()" class="text-white/80 hover:text-white focus:outline-none">
-                <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"
-                    class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                </svg>
-            </button>
+    <!-- Header Section (Translucent) -->
+    <div
+        class="px-5 py-4 border-b border-gray-200/50 dark:border-slate-800/60 flex items-center justify-between bg-white/20 dark:bg-slate-950/40 flex-shrink-0">
+        <div class="flex items-center gap-2.5">
+            <span class="relative flex h-2 w-2">
+                <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 dark:bg-emerald-400"></span>
+            </span>
+            <span
+                class="font-mono text-[11px] uppercase tracking-widest text-slate-600 dark:text-slate-400 font-semibold dark:font-normal">
+                HemLex AI
+            </span>
         </div>
+        <button onclick="toggleChatWindow()"
+            class="text-gray-400 hover:text-gray-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors focus:outline-none">
+            <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+        </button>
+    </div>
 
-        <!-- Chat Screen Messaging Area -->
-        <div id="chat-screen"
-            class="h-80 overflow-y-auto p-4 space-y-4 font-body text-sm bg-slate-50 dark:bg-slate-900/40">
+    <!-- Message Screen Area (Transparent to showcase the blur effect) -->
+    <div id="chat-screen" class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-6 scroll-smooth bg-transparent">
+
+        <!-- Initial AI Greeting Bubble -->
+        <div class="flex items-start gap-3 max-w-[92%]" data-role="assistant">
             <div
-                class="max-w-[85%] bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 p-3 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-700/50 shadow-sm leading-relaxed">
-                👋 Hello! I am HemLex's AI Assistant. How can I help you explore his portfolio, projects, or technical
-                skills today?
+                class="w-7 h-7 rounded-lg bg-white/80 dark:bg-white border border-white dark:border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
+                <img src="assets/icons/ai_profile.svg"
+                    onerror="this.onerror=null; this.src='../assets/icons/ai_profile.svg';" alt="AI"
+                    class="w-4 h-4 object-contain transition-all duration-300 dark:brightness-0 dark:opacity-80" />
             </div>
-        </div>
-
-        <!-- Input Actions Bar -->
-        <div
-            class="p-3 bg-white dark:bg-brandNeutral border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
-            <input type="text" id="chat-input" placeholder="Type query..."
-                class="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder-slate-400 font-body text-sm rounded-xl px-4 py-2.5 border-none focus:outline-none focus:ring-2 focus:ring-brandPrimary transition-all">
-            <button onclick="talkToAI()"
-                class="bg-brandPrimary hover:bg-opacity-95 text-white font-headline text-xs font-semibold uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-sm transition-all focus:outline-none">
-                Send
-            </button>
+            <div class="space-y-1">
+                <span
+                    class="block text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-500 font-semibold dark:font-normal">
+                    Hem's AI
+                </span>
+                <div>
+                    <div
+                        class="text-slate-800 dark:text-slate-100 text-sm font-normal dark:font-light leading-relaxed bg-white/60 dark:bg-slate-900/40 px-3.5 py-2.5 rounded-lg border border-white/80 dark:border-slate-800/50 shadow-sm backdrop-blur-sm">
+                        👋 Hello! I am Hem B. Khatri's AI Assistant. How can I help you explore his portfolio,
+                        projects, or technical skills today?
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
+
+    <!-- Input Footer Action Container (Frosted footer securely locked to container structure limits) -->
+    <div
+        class="p-3 sm:p-4 bg-white/60 dark:bg-slate-950/80 border-t border-gray-200/50 dark:border-slate-800/60 flex items-center gap-2.5 backdrop-blur-sm flex-shrink-0">
+        <input type="text" id="chat-input" placeholder="Inquire about stacks or experience..."
+            class="flex-1 bg-white/80 dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 font-normal dark:font-light text-sm rounded-lg px-4 py-2.5 border border-gray-200/60 dark:border-slate-800/80 focus:outline-none focus:border-brandPrimary dark:focus:border-slate-700 transition-colors shadow-inner min-w-0">
+
+        <button onclick="talkToAI()"
+            class="bg-slate-900 hover:bg-black dark:bg-slate-900 dark:hover:bg-slate-800 text-white dark:text-emerald-400 dark:hover:text-emerald-300 p-2.5 rounded-lg border border-slate-800 dark:border-slate-800 transition-all focus:outline-none flex items-center justify-center flex-shrink-0 shadow-md"
+            aria-label="Send Message">
+            <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                class="w-4 h-4 transform -rotate-45 -translate-x-0.5 translate-y-0.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+            </svg>
+        </button>
+    </div>
+
 </div>
+
+
 
 <!-- Integrated Functionality Script -->
 <script>
+    (function () {
+        const isMobile = window.innerWidth < 640;
+        // Dynamically calculate center-point morph transitions matching different client side configurations
+        const translateXValue = isMobile ? "0px" : "40px";
+        const translateYValue = isMobile ? "180px" : "260px";
+
+        const appleStyles = `
+        @keyframes appleClose {
+            0% { transform: scale(1) translate(0, 0); opacity: 1; filter: blur(0px); }
+            30% { transform: scaleX(0.85) scaleY(0.9) translate(0, 5px); opacity: 0.9; }
+            100% { transform: scaleX(0.05) scaleY(0.1) translate(${translateXValue}, ${translateYValue}); opacity: 0; filter: blur(4px); }
+        }
+        @keyframes appleOpen {
+            0% { transform: scaleX(0.05) scaleY(0.1) translate(${translateXValue}, ${translateYValue}); opacity: 0; filter: blur(4px); }
+            60% { transform: scaleX(0.85) scaleY(0.95) translate(0, -5px); opacity: 0.9; }
+            100% { transform: scale(1) translate(0, 0); opacity: 1; filter: blur(0px); }
+        }
+        .animate-apple-open { animation: appleOpen 380ms cubic-bezier(0.25, 1, 0.5, 1) forwards !important; }
+        .animate-apple-close { animation: appleClose 340ms cubic-bezier(0.55, 0, 1, 0.45) forwards !important; }
+    `;
+        const styleSheet = document.createElement("style");
+        styleSheet.textContent = appleStyles;
+        document.head.appendChild(styleSheet);
+    })();
+
+    const screenEl = document.getElementById('chat-screen');
+
+    // Core UI Generator: Appends messages with structural profile wrappers every single time
+    function appendMessageRow(sender, text) {
+        const isAI = sender === 'ai';
+        const formattedText = isAI ? formatAIResponse(text) : text;
+
+        const rowHTML = isAI ? `
+    <!-- AI Row Block Layout -->
+    <div class="flex items-start gap-3 max-w-[92%] animate-fadeIn">
+        <div class="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-xs flex-shrink-0 shadow-inner">🤖</div>
+        <div class="space-y-1">
+            <span class="block text-[10px] uppercase font-mono tracking-wider text-slate-500">Hem's AI</span>
+            <div class="text-slate-100 text-sm font-light leading-relaxed bg-slate-900/40 px-3.5 py-2.5 rounded-lg border border-slate-800/50 backdrop-blur-sm">
+                ${formattedText}
+            </div>
+        </div>
+    </div>` : `
+    <!-- Visitor Row Block Layout -->
+    <div class="flex items-start gap-3 max-w-[92%] ml-auto flex-row-reverse animate-fadeIn">
+        <div class="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-xs flex-shrink-0 shadow-inner">👤</div>
+        <div class="space-y-1 text-right">
+            <span class="block text-[10px] uppercase font-mono tracking-wider text-slate-500">Visitor</span>
+            <div class="text-emerald-300 text-sm font-light leading-relaxed bg-emerald-950/20 px-3.5 py-2.5 rounded-lg border border-emerald-900/30 text-left backdrop-blur-sm">
+                ${formattedText}
+            </div>
+        </div>
+    </div>`;
+
+        screenEl.innerHTML += rowHTML;
+        screenEl.scrollTop = screenEl.scrollHeight;
+    }
+
+    // Canva/Google Style Skeleton Loading State Controller
+    function showLoadingState() {
+        removeLoadingState(); // Keep clean from duplicates
+
+        const skeletonHTML = `
+    <div id="ai-loading-skeleton" class="flex items-start gap-3 max-w-[85%] animate-pulse">
+        <div class="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-xs flex-shrink-0 opacity-60">🤖</div>
+        <div class="space-y-2 w-full pt-1">
+            <div class="h-2.5 bg-slate-800/80 rounded w-1/3"></div>
+            <div class="space-y-1.5 bg-slate-900/40 p-3 rounded-lg border border-slate-800/30 w-full">
+                <div class="h-2 bg-slate-800 rounded w-full"></div>
+                <div class="h-2 bg-slate-800 rounded w-5/6"></div>
+                <div class="h-2 bg-slate-800 rounded w-2/3"></div>
+            </div>
+        </div>
+    </div>`;
+
+        screenEl.innerHTML += skeletonHTML;
+        screenEl.scrollTop = screenEl.scrollHeight;
+    }
+
+    function removeLoadingState() {
+        const skeleton = document.getElementById('ai-loading-skeleton');
+        if (skeleton) skeleton.remove();
+
+        const placeholder = document.getElementById('ai-loading-placeholder');
+        if (placeholder) placeholder.remove();
+    }
+
+
+
+
+
     // 1. Detect if the user manually reloaded the current page view
     if (window.performance && window.performance.getEntriesByType) {
         const navigationEntries = window.performance.getEntriesByType('navigation');
@@ -127,29 +254,52 @@
         const iconOpen = document.getElementById('toggle-icon-open');
         const iconClose = document.getElementById('toggle-icon-close');
 
+        if (!windowEl) {
+            console.error("Critical Failure: #ai-chat-window element not found.");
+            return;
+        }
+
         const isHidden = windowEl.classList.contains('hidden');
 
         if (isHidden) {
-            windowEl.classList.remove('hidden');
-            windowEl.classList.add('flex');
-            setTimeout(() => {
-                windowEl.classList.remove('scale-95');
-                windowEl.classList.add('scale-100');
-            }, 10);
-            iconOpen.classList.add('hidden');
-            iconClose.classList.remove('hidden');
-            document.getElementById('chat-input').focus();
+            // Clear any old closing frames
+            windowEl.classList.remove('animate-apple-close', 'hidden');
+
+            // Activate flex layout tracking container
+            windowEl.classList.add('flex', 'animate-apple-open');
+
+            // Sync button icons if they exist on the page
+            if (iconOpen) iconOpen.classList.add('hidden');
+            if (iconClose) iconClose.classList.remove('hidden');
+
+            // Autofocus the input box cleanly
+            const inputEl = document.getElementById('chat-input');
+            if (inputEl) inputEl.focus();
+
+            // Keep conversation thread scrolled to bottom
+            const screenEl = document.getElementById('chat-screen');
+            if (screenEl) screenEl.scrollTop = screenEl.scrollHeight;
+
         } else {
-            windowEl.classList.remove('scale-100');
-            windowEl.classList.add('scale-95');
+            // Clear opening frameworks and inject the Apple close warp sequence
+            windowEl.classList.remove('animate-apple-open');
+            windowEl.classList.add('animate-apple-close');
+
+            if (iconOpen) iconOpen.classList.remove('hidden');
+            if (iconClose) iconClose.classList.add('hidden');
+
+            // Critical: Wait exactly 340ms for the fluid close animation to finish before hiding the container
             setTimeout(() => {
-                windowEl.classList.add('hidden');
-                windowEl.classList.remove('flex');
-            }, 150);
-            iconOpen.classList.remove('hidden');
-            iconClose.classList.add('hidden');
+                // Verify user didn't hit open again mid-transition
+                if (windowEl.classList.contains('animate-apple-close')) {
+                    windowEl.classList.add('hidden');
+                    windowEl.classList.remove('flex', 'animate-apple-close');
+                }
+            }, 340);
         }
     }
+
+
 
     /**
      * Converts plain text URLs and contacts into interactive, styled Tailwind badges
@@ -219,90 +369,130 @@
 
         if (!text) return;
 
-        // 1. Append User Bubble
+        // 1. Correctly Append Visitor Message with accurate user data role and profile alignments
         screenEl.innerHTML += `
-        <div class="flex justify-end">
-            <div class="max-w-[85%] bg-brandPrimary text-white p-3 rounded-2xl rounded-tr-none shadow-sm leading-relaxed">
-                ${text}
+    <div class="flex items-start gap-3 max-w-[92%] ml-auto flex-row-reverse animate-fadeIn" data-role="user">
+        <!-- Icon Shell Frame: Solid white background with slate border lines -->
+        <div class="w-7 h-7 rounded-lg bg-white border border-gray-200/80 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
+            <img src="assets/icons/user_profile.svg" 
+                 onerror="this.onerror=null; this.src='../assets/icons/user_profile.svg';" 
+                 alt="User" 
+                 class="w-4 h-4 object-contain transition-all duration-300 brightness-0 opacity-80" />
+        </div>
+        <div class="space-y-1 text-right">
+            <span class="block text-[10px] uppercase font-mono tracking-wider text-slate-500">Visitor</span>
+            <div>
+                <div class="text-slate-800 dark:text-slate-100 text-sm font-normal dark:font-light leading-relaxed bg-white/60 dark:bg-slate-900/40 px-3.5 py-2.5 rounded-lg border border-white/80 dark:border-slate-800/50 text-left backdrop-blur-sm shadow-sm">
+                    ${text}
+                </div>
             </div>
-        </div>`;
+        </div>
+    </div>`;
 
         inputEl.value = '';
         screenEl.scrollTop = screenEl.scrollHeight;
         saveChatHistory();
 
-        // 2. Build Chat Context History Array for Backend
+        // 2. Build Chat Context History Array (Using safe class mapping)
         const historyArray = [];
-        const chatBubbles = screenEl.querySelectorAll('#chat-screen > div');
+        const chatBubbles = screenEl.querySelectorAll('#chat-screen > [data-role]');
 
         chatBubbles.forEach(bubble => {
-            const isUser = bubble.classList.contains('justify-end');
-            const textContent = bubble.textContent.trim();
-            // Skip loading indicators
-            if (textContent.includes("AI is processing...")) return;
+            const role = bubble.getAttribute('data-role');
+            const textContainer = bubble.querySelector('.backdrop-blur-sm');
+            let textContent = textContainer ? textContainer.textContent : bubble.textContent;
+
+            textContent = textContent.replace("Visitor", "").replace("Hem's AI", "").trim();
+
+            if (!textContent) return;
 
             historyArray.push({
-                role: isUser ? "user" : "assistant",
+                role: role === "user" ? "user" : "assistant",
                 content: textContent
             });
         });
 
-        // 3. Show Loading Indicator
+        // 3. Re-built Canva/Google glass framework skeleton loading state layout correctly
         const loading = document.createElement('div');
-        loading.className = "flex gap-1 items-center text-slate-400 dark:text-slate-500 font-body text-xs italic mt-1 pl-2";
         loading.id = "ai-loading-placeholder";
+        loading.className = "flex items-start gap-3 max-w-[85%] animate-pulse";
         loading.innerHTML = `
-        <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
-        <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
-        <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
-        <span class="ml-1">AI is processing...</span>`;
+    <div class="w-7 h-7 rounded-lg bg-white/80 dark:bg-white border border-white dark:border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
+        <img src="assets/icons/ai_profile.svg" onerror="this.onerror=null; this.src='../assets/icons/ai_profile.svg';" alt="AI" class="w-4 h-4 object-contain transition-all duration-300 dark:brightness-0 dark:opacity-80" />
+    </div>
+    <div class="space-y-2 w-full pt-1">
+        <div class="h-2.5 bg-gray-200 dark:bg-slate-800 rounded w-1/3"></div>
+        <div class="space-y-1.5 bg-white/40 dark:bg-slate-900/40 p-3 rounded-lg border border-white/80 dark:border-slate-800/30 w-full">
+            <div class="h-2 bg-gray-200 dark:bg-slate-800 rounded w-full"></div>
+            <div class="h-2 bg-gray-200 dark:bg-slate-800 rounded w-5/6"></div>
+        </div>
+    </div>`;
         screenEl.appendChild(loading);
         screenEl.scrollTop = screenEl.scrollHeight;
 
         try {
-            // 4. Send BOTH the latest message AND the history array
-            const res = await fetch('/hemkhatri.com.np/ai-backend.php', {
+            // 4. Send payloads to your backend
+            const res = await fetch('/hemkhatri.com.np/backend/ai-backend.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     message: text,
-                    history: historyArray // Passing whole conversation timeline
+                    history: historyArray
                 })
             });
 
+            if (!res.ok) throw new Error(`HTTP Status ${res.status}`);
             const data = await res.json();
+
             removeLoadingState();
 
             const parsedReply = formatAIResponse(data.reply);
 
-            // 5. Append AI Bubble
+            // 5. Append dynamic responses utilizing the LinkedIn high-contrast theme icon structure uniform template rules
             screenEl.innerHTML += `
-            <div class="flex justify-start">
-                <div class="max-w-[85%] bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 p-3 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-700/50 shadow-sm leading-relaxed">
-                    ${parsedReply}
+        <div class="flex items-start gap-3 max-w-[92%] animate-fadeIn" data-role="assistant">
+            <div class="w-7 h-7 rounded-lg bg-white/80 dark:bg-white border border-white dark:border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
+                <img src="assets/icons/ai_profile.svg" onerror="this.onerror=null; this.src='../assets/icons/ai_profile.svg';" alt="AI" class="w-4 h-4 object-contain transition-all duration-300 dark:brightness-0 dark:opacity-80" />
+            </div>
+            <div class="space-y-1">
+                <span class="block text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-500 font-semibold dark:font-normal">Hem's AI</span>
+                <div>
+                    <div class="text-slate-800 dark:text-slate-100 text-sm font-normal dark:font-light leading-relaxed bg-white/60 dark:bg-slate-900/40 px-3.5 py-2.5 rounded-lg border border-white/80 dark:border-slate-800/50 shadow-sm backdrop-blur-sm">
+                        ${parsedReply}
+                    </div>
                 </div>
-            </div>`;
+            </div>
+        </div>`;
 
             screenEl.scrollTop = screenEl.scrollHeight;
             saveChatHistory();
         } catch (e) {
             removeLoadingState();
+
+            // High contrast system failure fallback
             screenEl.innerHTML += `
-            <div class="flex justify-start">
-                <div class="max-w-[85%] bg-rose-50 text-rose-600 border border-rose-100 p-3 rounded-xl font-body text-xs">
-                    Failed to retrieve portfolio insights. Please verify connection.
+        <div class="flex items-start gap-3 max-w-[90%]">
+            <div class="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/30 flex items-center justify-center flex-shrink-0 shadow-sm">⚠️</div>
+            <div class="space-y-1 w-full">
+                <span class="block text-[10px] uppercase font-mono tracking-wider text-rose-500">System Core</span>
+                <div class="text-rose-800 dark:text-rose-400 text-xs font-normal dark:font-light leading-relaxed bg-rose-50/80 dark:bg-rose-950/20 px-3.5 py-2.5 rounded-lg border border-rose-200 dark:border-rose-900/30 space-y-2">
+                    <p>Failed to retrieve portfolio insights. Please verify connection.</p>
+                    <div class="font-mono text-[11px] bg-white/50 dark:bg-black/30 text-rose-700 dark:text-rose-300 p-2 rounded border border-rose-200 dark:border-rose-950/50 break-words overflow-x-auto">
+                        Code: ${e.message || e}
+                    </div>
                 </div>
-            </div>`;
+            </div>
+        </div>`;
             screenEl.scrollTop = screenEl.scrollHeight;
         }
     }
 
-    function removeLoadingState() {
-        const loadingPlaceholder = document.getElementById('ai-loading-placeholder');
-        if (loadingPlaceholder) {
-            loadingPlaceholder.remove();
-        }
-    }
+
+
+
+
+
+
 
     document.getElementById('chat-input').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') talkToAI();

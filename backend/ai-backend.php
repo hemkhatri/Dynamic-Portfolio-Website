@@ -1,6 +1,6 @@
 <?php
-header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *"); 
+header("Content-Type: application/json; charset=utf-8");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 
 // 1. Get the frontend payloads (Latest message + Conversation timeline array)
@@ -14,7 +14,8 @@ if (empty($userText)) {
 }
 
 // 2. Custom function to safely load environment variables from local .env
-function loadEnv($path) {
+function loadEnv($path)
+{
     if (!file_exists($path)) {
         return;
     }
@@ -45,8 +46,8 @@ function loadEnv($path) {
 }
 
 // Load configurations
-loadEnv(__DIR__ . '/.env');
-$groqApiKey = $_ENV['GROQ_API_KEY'] ?? '';
+loadEnv(__DIR__ . '/../.env');
+$groqApiKey = $_ENV['GROQ_API_KEY'] ?? $_SERVER['GROQ_API_KEY'] ?? getenv('GROQ_API_KEY') ?? '';
 
 if (empty($groqApiKey)) {
     echo json_encode(['reply' => 'Configuration error: API Key missing inside server environment.']);
@@ -54,12 +55,14 @@ if (empty($groqApiKey)) {
 }
 
 // 3. Import dynamic context instructions mapping
-$instructionFilePath = __DIR__ . '/instruction.txt';
+$instructionFilePath = __DIR__ . '/../instruction.txt';
+
 if (file_exists($instructionFilePath)) {
     $portfolioContext = file_get_contents($instructionFilePath);
 } else {
     $portfolioContext = "You are a polite AI portfolio assistant for Hem Khatri. Contact him via email at hemlexofficial@gmail.com.";
 }
+
 $portfolioContext = trim($portfolioContext);
 
 // 4. Construct the dynamic messages engine for Groq
@@ -67,7 +70,7 @@ $messagesPayload = [];
 
 // Inject your system instructions FIRST
 $messagesPayload[] = [
-    "role" => "system", 
+    "role" => "system",
     "content" => $portfolioContext
 ];
 
@@ -81,26 +84,25 @@ foreach ($conversationHistory as $msg) {
     if (isset($msg['role']) && isset($msg['content'])) {
         $role = trim($msg['role']);
         $content = trim($msg['content']);
-        
+
         // Skip message processing if it's the loading state string or empty
         if (strpos($content, "AI is processing...") !== false || empty($content)) {
             continue;
         }
 
         $messagesPayload[] = [
-            "role" => $role,
+            "role" => $role === 'user' ? 'user' : 'assistant',
             "content" => $content
         ];
     }
 }
 
-// Bump up the temperature slightly to 0.5-0.6 to give the AI organic phrasing variations 
-// instead of rigid, repetitive copy-pasting of instructions.
+// Bump up the temperature slightly to 0.5-0.6 to give the AI organic phrasing variations
 $postData = [
-    "model" => "llama-3.3-70b-versatile", 
+    "model" => "llama-3.3-70b-versatile",
     "messages" => $messagesPayload,
-    "max_tokens" => 150,
-    "temperature" => 0.5 
+    "max_tokens" => 250, // Bumped to 250 to prevent longer portfolio answers from getting cut off mid-sentence
+    "temperature" => 0.5
 ];
 
 $jsonPayload = json_encode($postData);
@@ -109,8 +111,8 @@ $jsonPayload = json_encode($postData);
 $ch = curl_init("https://api.groq.com/openai/v1/chat/completions");
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST"); 
-curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonPayload); 
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonPayload);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Bypasses local XAMPP/WAMP SSL configuration faults
 
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -138,4 +140,3 @@ if ($httpCode === 200 && isset($data['choices'][0]['message']['content'])) {
 // 7. Output back to your portfolio frontend component
 echo json_encode(["reply" => $aiAnswer]);
 exit;
-?>
