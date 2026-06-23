@@ -1,14 +1,19 @@
 <footer class="w-full text-gray-500 dark:text-zinc-500 pt-16 pb-8 mt-auto">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-medium tracking-wide border-t border-gray-200/20 dark:border-gray-800/40 pt-6">
+    <div
+        class="flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-medium tracking-wide border-t border-gray-200/20 dark:border-gray-800/40 pt-6">
 
         <nav class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-gray-600 dark:text-zinc-400">
-            <a href="index.php" class="hover:text-brandPrimary dark:hover:text-white transition-colors duration-200">Home</a>
+            <a href="index.php"
+                class="hover:text-brandPrimary dark:hover:text-white transition-colors duration-200">Home</a>
             <span class="text-gray-300 dark:text-zinc-700/40 select-none">/</span>
-            <a href="articles/articles.php" class="hover:text-brandPrimary dark:hover:text-white transition-colors duration-200">Blog</a>
+            <a href="articles/articles.php"
+                class="hover:text-brandPrimary dark:hover:text-white transition-colors duration-200">Blog</a>
             <span class="text-gray-300 dark:text-zinc-700/40 select-none">/</span>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-brandPrimary dark:hover:text-white transition-colors duration-200">GitHub</a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                class="hover:text-brandPrimary dark:hover:text-white transition-colors duration-200">GitHub</a>
             <span class="text-gray-300 dark:text-zinc-700/40 select-none">/</span>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hover:text-brandPrimary dark:hover:text-white transition-colors duration-200">LinkedIn</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                class="hover:text-brandPrimary dark:hover:text-white transition-colors duration-200">LinkedIn</a>
         </nav>
 
         <p class="text-center sm:text-right text-gray-400 dark:text-zinc-500">
@@ -24,23 +29,30 @@ $path_prefix = isset($base_path) ? $base_path : '';
 $is_spa = isset($_SERVER['HTTP_X_SPA_REQUEST']) && $_SERVER['HTTP_X_SPA_REQUEST'] === 'true';
 ?>
 
-</div> </section> </main> <?php
+</div>
+</section>
+</main>
+<?php
 if ($is_spa) {
     return;
 }
 ?>
 
-<div id="chat-trigger-container" class="fixed bottom-5 right-4 sm:right-5 z-[99999] font-sans antialiased transition-all duration-200">
+<div id="chat-trigger-container"
+    class="fixed bottom-5 right-4 sm:right-5 z-[99999] font-sans antialiased transition-all duration-200">
     <button id="chat-toggle-btn" onclick="toggleChatWindow()"
         class="flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-brandNeutral text-brandNeutral dark:text-white shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(0,150,136,0.4)] hover:shadow-[0_0_25px_rgba(0,150,136,0.6)] transition-all duration-300 transform hover:scale-105 focus:outline-none">
 
         <span id="toggle-icon-open" class="block">
-            <img src="<?php echo $path_prefix; ?>assets/icons/ai_assistant_icon.svg" alt="AI Assistant" class="w-8 h-8 block dark:hidden" />
-            <img src="<?php echo $path_prefix; ?>assets/icons/ai_assistant_icon.svg" alt="AI Assistant" class="w-8 h-8 hidden dark:block invert" />
+            <img src="<?php echo $path_prefix; ?>assets/icons/ai_assistant_icon.svg" alt="AI Assistant"
+                class="w-8 h-8 block dark:hidden" />
+            <img src="<?php echo $path_prefix; ?>assets/icons/ai_assistant_icon.svg" alt="AI Assistant"
+                class="w-8 h-8 hidden dark:block invert" />
         </span>
 
         <span id="toggle-icon-close" class="hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="w-8 h-8">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </span>
@@ -50,18 +62,24 @@ if ($is_spa) {
 <div id="ai-chat-window"
     class="hidden fixed bottom-0 left-0 right-0 sm:left-auto sm:right-4 sm:bottom-24 w-full sm:w-[380px] h-[60vh] sm:h-[520px] bg-white/40 dark:bg-slate-950/75 backdrop-blur-md border-t sm:border border-white/40 dark:border-slate-800/60 rounded-t-xl sm:rounded-xl flex flex-col overflow-hidden transition-all duration-300 transform scale-95 origin-bottom-right shadow-[0_8px_32px_0_rgba(15,23,42,0.08)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] z-[99999]">
 
-    <div class="px-5 py-4 border-b border-gray-200/50 dark:border-slate-800/60 flex items-center justify-between bg-white/20 dark:bg-slate-950/40 flex-shrink-0">
+    <div
+        class="px-5 py-4 border-b border-gray-200/50 dark:border-slate-800/60 flex items-center justify-between bg-white/20 dark:bg-slate-950/40 flex-shrink-0">
         <div class="flex items-center gap-2.5">
             <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 dark:bg-emerald-400"></span>
             </span>
-            <span class="font-mono text-[11px] uppercase tracking-widest text-slate-600 dark:text-slate-400 font-semibold dark:font-normal">
+            <span
+                class="font-mono text-[11px] uppercase tracking-widest text-slate-600 dark:text-slate-400 font-semibold dark:font-normal">
                 HemLex AI
             </span>
         </div>
-        <button onclick="toggleChatWindow()" class="text-gray-400 hover:text-gray-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors focus:outline-none p-1" aria-label="Close Chat">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+        <button onclick="toggleChatWindow()"
+            class="text-gray-400 hover:text-gray-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors focus:outline-none p-1"
+            aria-label="Close Chat">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
@@ -69,29 +87,39 @@ if ($is_spa) {
 
     <div id="chat-screen" class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-6 scroll-smooth bg-transparent">
         <div class="flex items-start gap-3 max-w-[92%]" data-role="assistant">
-            <div class="w-7 h-7 rounded-lg bg-white/80 dark:bg-white border border-white dark:border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
-                <img src="<?php echo $path_prefix; ?>assets/icons/ai_profile.svg" alt="AI" class="w-4 h-4 object-contain transition-all duration-300 dark:brightness-0 dark:opacity-80" />
+            <div
+                class="w-7 h-7 rounded-lg bg-white/80 dark:bg-white border border-white dark:border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
+                <img src="<?php echo $path_prefix; ?>assets/icons/ai_profile.svg" alt="AI"
+                    class="w-4 h-4 object-contain transition-all duration-300 dark:brightness-0 dark:opacity-80" />
             </div>
             <div class="space-y-1">
-                <span class="block text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-500 font-semibold dark:font-normal">
+                <span
+                    class="block text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-500 font-semibold dark:font-normal">
                     Hem's AI
                 </span>
                 <div>
-                    <div class="text-slate-800 dark:text-slate-100 text-sm font-normal dark:font-light leading-relaxed bg-white/60 dark:bg-slate-900/40 px-3.5 py-2.5 rounded-lg border border-white/80 dark:border-slate-800/50 shadow-sm backdrop-blur-sm">
-                        👋 Hello! I am Hem B. Khatri's AI Assistant. How can I help you explore his portfolio, projects, or technical skills today?
+                    <div
+                        class="text-slate-800 dark:text-slate-100 text-sm font-normal dark:font-light leading-relaxed bg-white/60 dark:bg-slate-900/40 px-3.5 py-2.5 rounded-lg border border-white/80 dark:border-slate-800/50 shadow-sm backdrop-blur-sm">
+                        👋 Hello! I am Hem B. Khatri's AI Assistant. How can I help you explore his portfolio, projects,
+                        or technical skills today?
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="p-3 sm:p-4 bg-white/60 dark:bg-slate-950/80 border-t border-gray-200/50 dark:border-slate-800/60 flex items-center gap-2.5 backdrop-blur-sm flex-shrink-0">
+    <div
+        class="p-3 sm:p-4 bg-white/60 dark:bg-slate-950/80 border-t border-gray-200/50 dark:border-slate-800/60 flex items-center gap-2.5 backdrop-blur-sm flex-shrink-0">
         <input type="text" id="chat-input" placeholder="Ask anything about me...."
             class="flex-1 bg-white/80 dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 font-normal dark:font-light text-sm rounded-lg px-4 py-2.5 border border-gray-200/60 dark:border-slate-800/80 focus:outline-none focus:border-brandPrimary dark:focus:border-slate-700 transition-colors shadow-inner min-w-0">
 
-        <button onclick="talkToAI()" class="bg-slate-900 hover:bg-black dark:bg-slate-900 dark:hover:bg-slate-800 text-white dark:text-emerald-400 dark:hover:text-emerald-300 p-2.5 rounded-lg border border-slate-800 dark:border-slate-800 transition-all focus:outline-none flex items-center justify-center flex-shrink-0 shadow-md" aria-label="Send Message">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 transform -rotate-45 -translate-x-0.5 translate-y-0.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+        <button onclick="talkToAI()"
+            class="bg-slate-900 hover:bg-black dark:bg-slate-900 dark:hover:bg-slate-800 text-white dark:text-emerald-400 dark:hover:text-emerald-300 p-2.5 rounded-lg border border-slate-800 dark:border-slate-800 transition-all focus:outline-none flex items-center justify-center flex-shrink-0 shadow-md"
+            aria-label="Send Message">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="w-4 h-4 transform -rotate-45 -translate-x-0.5 translate-y-0.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
             </svg>
         </button>
     </div>
@@ -127,14 +155,14 @@ if ($is_spa) {
     // Visual Viewport Handling for Mobile Virtual Keyboards
     function adjustChatForVisualViewport() {
         if (!window.visualViewport || window.innerWidth >= 640) return;
-        
+
         const chatWindow = document.getElementById('ai-chat-window');
         const triggerBtn = document.getElementById('chat-trigger-container');
-        
+
         const viewportHeight = window.visualViewport.height;
         const windowHeight = window.innerHeight;
         const keyboardHeight = windowHeight - viewportHeight;
-        
+
         if (keyboardHeight > 50) {
             // Keyboard is open on mobile devices
             if (chatWindow) {
@@ -428,4 +456,5 @@ if ($is_spa) {
     });
 </script>
 </body>
+
 </html>

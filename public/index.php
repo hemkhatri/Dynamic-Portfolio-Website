@@ -1,8 +1,8 @@
-<?php include 'includes/header.php';
+<?php include '../src/includes/header.php';
 // Using require stops execution instantly if the file isn't found
-require __DIR__ . '/includes/dbconfig.php';
+require __DIR__ . '/../config/dbconfig.php';
 // 1. Fetch the latest 4 posts at the top of your index.php file
-require_once __DIR__ . '/backend/blogger_post_handler.php';
+require_once __DIR__ . '/../src/backend/blogger_post_handler.php';
 
 // 1. Fire the pipeline request
 $endpoint = "posts?maxResults=10&";
@@ -325,7 +325,7 @@ if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items
 
     <!-- View All Projects Link Container -->
     <div class="mt-12">
-        <a href="projects"
+        <a href="projects/projects.php"
             class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 font-medium text-sm inline-flex items-center group transition-colors">
             View all projects
             <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
@@ -591,4 +591,4 @@ if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items
 
     </div>
 </div>
-<?php include 'includes/footer.php'; ?>
+<?php include '../src/includes/footer.php'; ?>

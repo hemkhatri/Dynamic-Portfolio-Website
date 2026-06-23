@@ -45,8 +45,8 @@ function loadEnv($path)
     }
 }
 
-// Load configurations
-loadEnv(__DIR__ . '/../.env');
+// Load configurations from repository root
+loadEnv(__DIR__ . '/../../.env');
 $groqApiKey = $_ENV['GROQ_API_KEY'] ?? $_SERVER['GROQ_API_KEY'] ?? getenv('GROQ_API_KEY') ?? '';
 
 if (empty($groqApiKey)) {
@@ -55,7 +55,7 @@ if (empty($groqApiKey)) {
 }
 
 // 3. Import dynamic context instructions mapping
-$instructionFilePath = __DIR__ . '/../instruction.txt';
+$instructionFilePath = __DIR__ . '/../../instruction.txt';
 
 if (file_exists($instructionFilePath)) {
     $portfolioContext = file_get_contents($instructionFilePath);

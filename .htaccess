@@ -4,13 +4,24 @@ RewriteEngine On
 # Explicitly set the base subdirectory folder for XAMPP
 RewriteBase /hemkhatri.com.np/
 
-# 1. Turn off directory slashing conflicts for the projects folder route
+# 1. Route everything to the public folder internally
+# If the request doesn't already start with 'public/'
+RewriteCond %{REQUEST_URI} !^/hemkhatri.com.np/public/
+
+# Rewrite the root URL to public/index.php
+RewriteRule ^$ public/index.php [L]
+
+# Rewrite asset and file paths to look inside public/
+RewriteCond %{REQUEST_URI} !^/hemkhatri.com.np/public/
+RewriteRule ^(.*)$ public/$1 [L]
+
+# 2. Turn off directory slashing conflicts
 DirectorySlash Off
 
-# 2. Map the clean URL directly to the file inside the subfolder
-RewriteRule ^projects$ projects/projects.php [L,QSA]
+# 3. Map clean URLs inside the public directory
+RewriteRule ^projects$ public/projects/projects.php [L,QSA]
 
-# 3. Route clean URLs matching /articles/slug-name internally to /articles/post.php?slug=slug-name
+# 4. Route clean article URLs inside the public directory
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^articles/([^/]+)$ articles/post.php?slug=$1 [L,QSA]
+RewriteRule ^articles/([^/]+)$ public/articles/post.php?slug=$1 [L,QSA]

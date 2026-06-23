@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__ . '/../../src/includes/header.php';
 // DB Configuration
 $db_host = 'localhost';
 $db_user = 'root';
@@ -54,7 +55,7 @@ function isYouTubeUrl($url)
 }
 ?>
 
-<?php include_once '../includes/header.php'; ?>
+
 
 <main class="w-full max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8 font-body">
     <div class="mb-12 border-b border-gray-200 dark:border-slate-800 pb-6">
@@ -249,7 +250,7 @@ function isYouTubeUrl($url)
     <div class="w-full max-w-5xl max-h-[85vh] flex items-center justify-center" id="lightbox-content">
     </div>
 </div>
-<?php include_once '../includes/footer.php'; ?>
+<?php include_once __DIR__ . '/../../src/includes/footer.php'; ?>
 
 <script>
     function moveCarousel(id, direction) {

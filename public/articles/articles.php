@@ -1,14 +1,14 @@
 <?php
 // 1. Set dynamic metadata context before loading layouts
 $pageTitle = "Hem B. Khatri - Articles & Insights";
-include "../includes/header.php";
+include(__DIR__ . '/../../src/includes/header.php');
 
 // डाइनमिक बेस पाथ (Base Path) सेटिङ - लोकलहोस्ट र लाइभ सर्भर स्वतः छुट्याउँछ
 $is_localhost = ($_SERVER['REMOTE_ADDR'] === '127.0.0.1' || $_SERVER['REMOTE_ADDR'] === '::1' || $_SERVER['SERVER_NAME'] === 'localhost');
 $base_path = $is_localhost ? '/hemkhatri.com.np' : '';
 
 // 2. Load the Blogger handler and fetch dynamic articles
-require_once dirname(__DIR__) . '/backend/blogger_post_handler.php';
+require_once __DIR__ . '/../../src/backend/blogger_post_handler.php';
 $raw_payload = fetch_blogger_data('posts?maxResults=50&', 'posts_cache.json');
 
 $blogs_data = [];
