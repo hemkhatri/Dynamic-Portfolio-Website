@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // 2. Load your Blogger API connection
-require_once dirname(__DIR__) . '/blogger_api.php';
+require_once dirname(__DIR__) . '/backend/blogger_post_handler.php';
 
 // 3. Fetch the raw posts matrix payload
 $raw_payload = fetch_blogger_data('posts?maxResults=50&', 'posts_cache.json');
@@ -15,7 +15,7 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
 // 5. Fallback routing if the requested token is invalid or blank
 if (empty($slug)) {
-    header("Location: ../blogs.php");
+    header("Location: articles.php");
     exit;
 }
 
@@ -38,7 +38,7 @@ if (!empty($formatted_posts)) {
 
 // 8. If no post matched, redirect up to the actual root level blogs.php
 if (!$article) {
-    header("Location: ../blogs.php");
+    header("Location: articles.php");
     exit;
 }
 
@@ -69,7 +69,7 @@ if (file_exists("../includes/header.php")) {
 <div class="w-full max-w-3xl mx-auto py-4">
 
     <div class="mb-8 -ml-4 sm:-ml-6 pl-4 sm:pl-6">
-        <a href="../blogs.php" class="inline-flex items-center text-sm font-medium text-teal-500 hover:text-teal-400 transition-colors group">
+        <a href="articles/articles.php" class="inline-flex items-center text-sm font-medium text-teal-500 hover:text-teal-400 transition-colors group">
             <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>

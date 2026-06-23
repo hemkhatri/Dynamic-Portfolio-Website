@@ -1,10 +1,16 @@
-Options +FollowSymLinks
+Options +FollowSymLinks -Indexes
 RewriteEngine On
 
 # Explicitly set the base subdirectory folder for XAMPP
 RewriteBase /hemkhatri.com.np/
 
-# Route clean URLs matching /articles/slug-name internally to /articles/post.php?slug=slug-name
+# 1. Turn off directory slashing conflicts for the projects folder route
+DirectorySlash Off
+
+# 2. Map the clean URL directly to the file inside the subfolder
+RewriteRule ^projects$ projects/projects.php [L,QSA]
+
+# 3. Route clean URLs matching /articles/slug-name internally to /articles/post.php?slug=slug-name
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^articles/([^/]+)$ articles/post.php?slug=$1 [L,QSA]

@@ -40,13 +40,13 @@ function loadEnv($path) {
 }
 
 // 1. CRITICAL: You must execute the function FIRST to populate $_ENV
-loadEnv(__DIR__ . '/.env'); 
+loadEnv(dirname(__DIR__) . '/.env'); 
 
 // 2. Fetching from .env (with fallbacks to prevent errors if keys are missing)
 define('BLOG_ID', $_ENV['BLOG_ID'] ?? '');
 define('API_KEY', $_ENV['API_KEY'] ?? '');
 define('CACHE_EXPIRY', isset($_ENV['CACHE_EXPIRY']) ? (int)$_ENV['CACHE_EXPIRY'] : 900); 
-define('CACHE_DIR', $_ENV['CACHE_DIR'] ?? 'post_cache/');
+define('CACHE_DIR', dirname(__DIR__) . '/' . ($_ENV['CACHE_DIR'] ?? 'post_cache/'));
 
 
 // =========================================================================
@@ -182,7 +182,7 @@ function format_blogger_posts($raw_posts) {
  * Looks up the master cache file to find the post ID that matches a text slug.
  */
 function get_post_id_by_slug($slug) {
-    $cache_file = 'post_cache/posts_cache.json';
+    $cache_file = CACHE_DIR . 'posts_cache.json';
     if (!file_exists($cache_file)) return null;
 
     $raw_data = json_decode(file_get_contents($cache_file), true);

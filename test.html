@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic GitHub Stats</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css" />
+
+    <script>
+        // Integrated your custom website configuration
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brandPrimary: '#009688',
+                        brandNeutral: '#0F172A',
+                    },
+                    fontFamily: {
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        headline: ['"Karla"', 'sans-serif'],
+                        body: ['"Open Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Injected override to round the corners of the SVG/HTML contribution squares */
+        .calendar text { font-size: 10px; fill: #8b949e; }
+        
+        /* FORCE MARGIN BETWEEN SQUARES VIA TABLE SPACING */
+        .calendar table.ContributionCalendar-grid {
+            border-collapse: separate !important;
+            
+            /* ADJUST MARGIN HERE: Increase this pixel value for wider gaps */
+            border-spacing: 3px !important; 
+        }
+
+        /* FORCE PERFECT SQUARES FOR ALL LAYOUT VARIATIONS */
+        .calendar rect.ContributionCalendar-day,
+        .calendar td.ContributionCalendar-day,
+        .calendar [data-count],
+        .calendar .legend li { 
+            width: 10px !important;
+            height: 10px !important;
+            aspect-ratio: 1 / 1 !important; 
+            
+            rx: 2px !important;       /* For SVG element rendering */
+            ry: 2px !important;
+            border-radius: 2px !important; /* For HTML fallback elements */
+            
+            /* Overrides internal padding that causes boxes to touch */
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        /* CUSTOM THEME MECHANICS SCALED TO MATCH YOUR BRAND PRIMARY (#009688) */
+        /* Level 0 (Empty grid cell) */
+        .calendar [data-level="0"] { fill: #1e293b !important; background-color: #1e293b !important; }
+        /* Level 1 (Low activity - Lightest Accent) */
+        .calendar [data-level="1"] { fill: #004d44 !important; background-color: #004d44 !important; }
+        /* Level 2 (Moderate activity - Medium Accent) */
+        .calendar [data-level="2"] { fill: #007367 !important; background-color: #007367 !important; }
+        /* Level 3 (High activity - Core Brand Primary) */
+        .calendar [data-level="3"] { fill: #009688 !important; background-color: #009688 !important; }
+        /* Level 4 (Highest activity - Vibrant Glow Highlight) */
+        .calendar [data-level="4"] { fill: #33ab9f !important; background-color: #33ab9f !important; }
+
+        /* Custom layout cleanup for the github-calendar wrapper */
+        .calendar .contrib-column,
+        .calendar .contrib-column-first,
+        .calendar h2,
+        .calendar .js-yearly-contributions,
+        .calendar .sr-only {
+            display: none !important;
+        }
+
+        /* Hides the "Skip to contributions year list" text overlay */
+        .calendar #skip-to-timetable,
+        .calendar [href="#skip-to-timetable"],
+        .calendar h2.sr-only {
+            display: none !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+        }
+    </style>
+</head>
+
+<body class="bg-brandNeutral text-[#c9d1d9] flex justify-center items-center min-h-screen m-0 p-5 font-sans">
+
+    <div class="bg-[#161b22] border border-[#30363d] rounded-lg p-6 max-w-[900px] w-full">
+
+        <div class="flex flex-wrap gap-4 mb-6">
+
+            <div class="bg-brandNeutral border border-[#30363d] rounded-lg p-4 flex-1 min-w-[150px] text-center">
+                <span class="block text-2xl font-bold text-brandPrimary" id="contrib-count">Loading...</span>
+                <span class="text-xs text-[#8b949e]">Contributions (last year)</span>
+            </div>
+
+            <div class="bg-brandNeutral border border-[#30363d] rounded-lg p-4 flex-1 min-w-[150px] text-center">
+                <span class="block text-2xl font-bold" id="repo-count">Loading...</span>
+                <span class="text-xs text-[#8b949e]">Public repos</span>
+            </div>
+
+            <div class="bg-brandNeutral border border-[#30363d] rounded-lg p-4 flex-1 min-w-[150px] text-center">
+                <span class="block text-2xl font-bold" id="follower-count">Loading...</span>
+                <span class="text-xs text-[#8b949e]">Followers</span>
+            </div>
+
+            <div class="bg-brandNeutral border border-[#30363d] rounded-lg p-4 flex-1 min-w-[150px] text-center">
+                <span class="block text-2xl font-bold" id="streak-count">Loading...</span>
+                <span class="text-xs text-[#8b949e]">Day streak</span>
+            </div>
+
+        </div>
+
+        <div class="calendar !border-none !p-0">
+            <span class="text-sm text-[#8b949e]">Loading GitHub activity...</span>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
+
+    <script>
+        const username = "hemkhatri";
+
+        // Fetch Github profile data
+        fetch(`https://api.github.com/users/${username}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("repo-count").innerText = data.public_repos ?? 0;
+                document.getElementById("follower-count").innerText = data.followers ?? 0;
+            })
+            .catch(() => {
+                document.getElementById("repo-count").innerText = "N/A";
+                document.getElementById("follower-count").innerText = "N/A";
+            });
+
+        // Github Contribution Calendar Init
+        GitHubCalendar(".calendar", username, {
+            responsive: true,
+            tooltips: true,
+            global_stats: false
+        })
+        .then(() => {
+            setTimeout(() => {
+                const squares = document.querySelectorAll('.calendar [data-count]');
+                
+                let total = 0;
+                let streak = 0;
+                let temp = 0;
+
+                squares.forEach(square => {
+                    let count = parseInt(square.getAttribute("data-count")) || 0;
+                    total += count;
+
+                    if (count > 0) {
+                        temp++;
+                        streak = temp;
+                    } else {
+                        temp = 0;
+                    }
+                });
+
+                // Formatting footer layout and legend items injected by library to look cleaner
+                const footer = document.querySelector('.calendar .contrib-footer');
+                if (footer) {
+                    footer.className = "flex justify-end pt-4 text-xs text-[#8b949e] items-center gap-1";
+                }
+
+                // Map custom colors dynamically to the legend footer items too
+                const legendItems = document.querySelectorAll('.calendar .legend li');
+                legendItems.forEach((li, index) => {
+                    li.setAttribute('data-level', index);
+                    li.style.marginLeft = "3px"; // Match the grid spacing gap exactly
+                });
+
+                document.getElementById("contrib-count").innerText = total.toLocaleString();
+                document.getElementById("streak-count").innerText = "🔥 " + streak;
+
+            }, 1500);
+        })
+        .catch(error => {
+            console.log(error);
+            document.getElementById("contrib-count").innerText = "N/A";
+            document.getElementById("streak-count").innerText = "🔥 0";
+        });
+    </script>
+</body>
+</html>

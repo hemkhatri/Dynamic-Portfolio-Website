@@ -7,7 +7,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-A high-performance, lightweight, and modern **dynamic PHP portfolio website and headless blogging engine** tailored for software engineers, web developers, and full-stack creators. Designed with high-end glassmorphism, responsive animations, and single-page application feel (via HTMX), this template requires zero heavy JavaScript frameworks.
+A high-performance, lightweight, and modern **dynamic PHP portfolio website and headless blogging engine** tailored for software engineers, web developers, and full-stack creators. Designed with high-end glassmorphism, responsive animations, and a single-page application (SPA) feel via HTMX, this template requires zero heavy JavaScript frameworks.
 
 🎯 **Live Demo:** [hemkhatri.com.np](https://hemkhatri.com.np)
 
@@ -16,33 +16,33 @@ A high-performance, lightweight, and modern **dynamic PHP portfolio website and 
 ## 📸 Project Previews & Screenshots
 
 ### 🖥️ Desktop View 
-(Dark Mode)
-<img width="1903" height="1079" alt="Desktop Projects & Skills Grid | Day Theme" src="https://github.com/user-attachments/assets/aa7247d4-e577-435b-93a7-12a86ff10e14" />
-(White Mode)
-<img width="1902" height="1079" alt="Desktop Projects & Skills Grid | Dark Theme" src="https://github.com/user-attachments/assets/8bf32cc5-22b6-4304-8c7d-9f78c92d618d" />
+**Dark Theme**
+<img width="1903" height="1079" alt="Desktop Projects & Skills Grid | Dark Theme" src="https://github.com/user-attachments/assets/aa7247d4-e577-435b-93a7-12a86ff10e14" />
 
+**Light Theme**
+<img width="1902" height="1079" alt="Desktop Projects & Skills Grid | Light Theme" src="https://github.com/user-attachments/assets/8bf32cc5-22b6-4304-8c7d-9f78c92d618d" />
 
 ### 📱 Mobile View (Responsive & Adaptive Layouts)
 <div align="center">
-  <img width="359" height="740" alt="image" src="https://github.com/user-attachments/assets/69b2f131-5345-4176-ace8-16c3d4303f58" />
-  <img width="359" height="737" alt="image" src="https://github.com/user-attachments/assets/5422d753-06c3-479a-9bbc-2a11d4ae6e4e" />
-
+  <img width="359" height="740" alt="Mobile View - Dark" src="https://github.com/user-attachments/assets/69b2f131-5345-4176-ace8-16c3d4303f58" style="margin-right: 10px;" />
+  <img width="359" height="737" alt="Mobile View - Light" src="https://github.com/user-attachments/assets/5422d753-06c3-479a-9bbc-2a11d4ae6e4e" />
 </div>
 
 ---
 
 ## 🔥 Key Technical Features
 
-* **🤖 Groq-Powered AI Assistant (`ai-backend.php`)**
+* **🤖 Groq-Powered AI Assistant (`backend/ai-backend.php`)**
   * Integrated chatbot window loaded directly on the frontend using vanilla Javascript.
-  * Backend cURL integration with Groq API utilizing the `llama-3.3-70b-versatile` model.
-  * Injects specialized personal background information from `instruction.txt` to align AI answers with your resume facts.
+  * Backend cURL integration with Groq API utilizing the high-performance `llama-3.3-70b-versatile` model.
+  * Injects specialized personal background information from `instruction.txt` to align AI responses with your resume facts.
   * Optimizes memory and token consumption by sending only the last 10 messages from session storage.
   * Native regex parsers convert phone numbers, email addresses, and LinkedIn/GitHub profiles into interactive, clickable UI badges.
 
-* **📰 Headless CMS Blogger Integration (`blogger_api.php`)**
+* **📰 Headless CMS Blogger Integration (`backend/blogger_post_handler.php`)**
   * Connects to Google Blogger REST API v3 to pull articles dynamically.
   * Local file-caching architecture (`post_cache/posts_cache.json`) with customizable expiry rules to bypass rate-limiting and decrease load latency.
+  * Absolute path resolution to prevent duplicate cache directories and ensure seamless loading across root and nested article detail sub-pages.
   * Automated emergency fallback to serve stale cache logs if Google Blogger service is unreachable.
   * Helper functions convert post titles into clean, search-engine-friendly SEO slugs.
 
@@ -65,7 +65,7 @@ A high-performance, lightweight, and modern **dynamic PHP portfolio website and 
 ## 🛠️ Technology Stack Architecture
 
 * **Backend Engine**: PHP 8.x (Native execution, zero composer dependencies)
-* **Frontend styling**: Tailwind CSS v3 (loaded via CDN with customized script config), Vanilla CSS Custom Layouts
+* **Frontend Styling**: Tailwind CSS v3 (loaded via CDN with customized script config), Vanilla CSS Custom Layouts
 * **Navigation Pipeline**: HTMX (AJAX Boost routing)
 * **Local Development**: Apache / XAMPP on Windows
 
@@ -76,29 +76,33 @@ A high-performance, lightweight, and modern **dynamic PHP portfolio website and 
 ```text
 📦 Dynamic-Portfolio-Website
  ├── .github/
- │   └── release.yml        # Categorizes merged Pull Requests for release logs
- ├── articles/              # Dynamic blogging engine components
- │   ├── articles.php       # Article archive listing static layouts & mock data
- │   └── post.php           # Fetches and renders individual post details from Blogger
- ├── assets/                # Structural layout static graphics and media
- │   ├── favicon/           # Platform icons and profile thumbnails
- │   ├── images/            # Local gallery landscapes
- │   └── screenshots/       # Preview illustrations
- ├── includes/              # Shared header and footer layouts
- │   ├── footer.php         # Chatbot layout structure, AJAX scripts & regex parsers
- │   └── header.php         # Logo pill, navigation links & theme toggle
- ├── post_cache/            # Local Blogger JSON caches (Automatically created)
- ├── .env.example           # Reference environmental variables file
- ├── .gitignore             # Tailor-made Git ignore rules
- ├── .htaccess              # Apache URL rewrite router for clean slugs
- ├── about.php              # Professional portfolio bio layout
- ├── ai-backend.php         # Groq API cURL pipeline and message memory handler
- ├── blogger_api.php        # Blogger data sync, cache controllers & TOC parser
- ├── index.php              # Landing portfolio home page with Blogger integration
- ├── instruction.txt        # Facts context file injected into AI chatbot system
- ├── LICENSE                # MIT Open-Source Authorization
- ├── README.md              # Project Documentation
- └── test.php               # Programmer connection check dashboard
+ │   ├── workflows/
+ │   │   └── auto-release.yml   # Automatic GitHub Action to draft and tag releases
+ │   └── release.yml            # Categorizes merged Pull Requests for release logs
+ ├── articles/                  # Dynamic blogging engine components
+ │   ├── articles.php           # Dynamic article archive listing Blogger feeds
+ │   └── post.php               # Fetches and renders individual post details from Blogger
+ ├── assets/                    # Structural layout static graphics and media
+ │   ├── favicon/               # Platform icons and profile thumbnails
+ │   ├── icons/                 # System SVGs (AI bot indicators, user profiles)
+ │   ├── images/                # Local gallery landscapes
+ │   └── screenshots/           # Preview illustrations
+ ├── backend/                   # Core server logic modules
+ │   ├── ai-backend.php         # Groq API cURL pipeline and message memory handler
+ │   └── blogger_post_handler.php # Blogger API data sync, absolute cache controller & TOC parser
+ ├── includes/                  # Shared header and footer layouts
+ │   ├── footer.php             # Chatbot layout structure, AJAX scripts & regex parsers
+ │   └── header.php             # Logo pill, navigation links & theme toggle
+ ├── post_cache/                # Absolute Local Blogger JSON caches (Automatically created)
+ ├── .env.example               # Reference environmental variables file
+ ├── .gitignore                 # Tailor-made Git ignore rules
+ ├── .htaccess                  # Apache URL rewrite router for clean slugs
+ ├── about.php                  # Professional portfolio bio layout
+ ├── index.php                  # Landing portfolio home page with Blogger integration
+ ├── instruction.txt            # Facts context file injected into AI chatbot system
+ ├── LICENSE                    # MIT Open-Source Authorization
+ ├── README.md                  # Project Documentation
+ └── test.php                   # Developer connection check dashboard
 ```
 
 ---

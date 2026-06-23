@@ -1,0 +1,20 @@
+-- 1. Create the projects table structure
+CREATE TABLE IF NOT EXISTS `projects` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(255) NOT NULL,
+  `category` VARCHAR(100) NOT NULL DEFAULT 'Web Development',
+  `description` TEXT NOT NULL,
+  `key_contribution` TEXT DEFAULT NULL,
+  `conclusion` TEXT DEFAULT NULL,
+  `languages_used` VARCHAR(255) NOT NULL,
+  `project_media` TEXT DEFAULT NULL,
+  `github_link` VARCHAR(255) DEFAULT NULL,
+  `live_demo_link` VARCHAR(255) DEFAULT NULL,
+  `date_started` DATE NOT NULL,
+  `date_finished` DATE DEFAULT NULL,
+  `is_featured` TINYINT(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 2. Add an optimization index for performance on your live server
+-- (This ensures fast loading speeds when filtering or sorting by date on your homepage)
+ALTER TABLE `projects` ADD INDEX `idx_featured_date` (`is_featured`, `date_started` DESC);

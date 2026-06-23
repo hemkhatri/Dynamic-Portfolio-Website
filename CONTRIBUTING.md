@@ -42,11 +42,11 @@ Before submitting your pull request, verify that your changes did not break core
 
 ### 2. AI Assistant Integration
 - Open the home page and click on the floating **Portfolio AI** button at the bottom-right corner.
-- Type a test query (e.g., "What is your email?") and verify the assistant responds with data populated from `instruction.txt`.
+- Type a test query (e.g., "What is HemLex's email?") and verify the assistant responds with data populated from `instruction.txt`.
 - Check that the returned links (GitHub, LinkedIn, Email) are formatted correctly into interactive badges by the client-side JavaScript regex parser inside `includes/footer.php`.
 
 ### 3. Server URL Rewriting
-- Navigate to a blog post from the index page.
+- Navigate to a blog post from the index page or articles archive page.
 - Verify that your URL rewrites cleanly to `http://localhost/Dynamic-Portfolio-Website/articles/your-blog-slug-name` (this tests the Apache `.htaccess` rewriting rules).
 
 ---

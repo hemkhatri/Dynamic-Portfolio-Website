@@ -1,4 +1,6 @@
 <?php include 'includes/header.php';
+// Using require stops execution instantly if the file isn't found
+require __DIR__ . '/includes/dbconfig.php';
 // 1. Fetch the latest 4 posts at the top of your index.php file
 require_once __DIR__ . '/backend/blogger_post_handler.php';
 
@@ -82,7 +84,7 @@ if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items
 <!-- HERO SECTION -->
 
 <!-- Profile Image Placeholder -->
-<div class="mb-8">
+<div id="about" class="mb-8">
     <img src="assets/favicon/profile.png" alt="Hem B. Khatri"
         class="w-16 h-16 rounded-full object-cover border-2 border-brandPrimary/30">
 </div>
@@ -231,7 +233,6 @@ if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items
     </div>
 </div>
 
-
 <!-- My projects -->
 <div class="project section py-12">
 
@@ -239,80 +240,92 @@ if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items
     <div class="mb-6 md:mb-8">
         <h2
             class="font-sans text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 transition-colors duration-300">
-            Featured Projects</h2>
+            Featured Projects
+        </h2>
         <p class="font-body text-gray-600 dark:text-gray-400 text-base md:text-lg transition-colors duration-300">
-            Production systems I've designed, built, and shipped.</p>
+            Production systems I've designed, built, and shipped.
+        </p>
     </div>
 
-    <!-- Projects Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 -mx-8">
+    <?php
+    try {
+        // Fetches top 3 projects matching your database schema flag: is_featured = 1
+        $stmt = $pdo->query("SELECT * FROM projects WHERE is_featured = 1 ORDER BY date_started DESC LIMIT 3");
+        $featured_projects = $stmt->fetchAll();
 
-        <!-- Project 1 -->
-        <a href="#"
-            class="cursor-pointer bg-transparent hover:bg-slate-100 dark:hover:bg-neutral-800/40 p-8 rounded-2xl flex flex-col h-full border border-gray-200/60 dark:border-gray-800/20 group transition-colors duration-300">
-            <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">
-                merojob</h3>
-            <p
-                class="font-body text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-grow transition-colors duration-300">
-                Nepal's #1 job portal — a high-traffic, full-stack platform handling thousands of daily job
-                seekers and employers. Built and maintained core backend services for scalable performance.
-            </p>
-            <div
-                class="text-teal-600 dark:text-teal-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 text-sm font-medium inline-flex items-center transition-colors mt-auto w-max">
-                merojob.com
-                <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </div>
-        </a>
+    } catch (PDOException $e) {
+        // Silent graceful fallback if the database connection fails
+        $featured_projects = [];
+    }
+    ?>
 
+    <?php if (empty($featured_projects)): ?>
+        <p class="text-gray-500 dark:text-gray-400 text-left py-4 italic">No featured projects found...</p>
+    <?php else: ?>
+        <!-- Projects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 -mx-8">
 
-        <!-- Project 2 -->
-        <a href="#"
-            class="cursor-pointer bg-transparent hover:bg-slate-100 dark:hover:bg-neutral-800/40 p-8 rounded-2xl flex flex-col h-full border border-gray-200/60 dark:border-gray-800/20 group transition-colors duration-300">
-            <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">
-                merojob</h3>
-            <p
-                class="font-body text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-grow transition-colors duration-300">
-                Nepal's #1 job portal — a high-traffic, full-stack platform handling thousands of daily job
-                seekers and employers. Built and maintained core backend services for scalable performance.
-            </p>
-            <div
-                class="text-teal-600 dark:text-teal-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 text-sm font-medium inline-flex items-center transition-colors mt-auto w-max">
-                merojob.com
-                <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </div>
-        </a>
+            <?php foreach ($featured_projects as $project): ?>
+                <!-- Dynamic Uniform Project Card Wrapper (Non-clickable container) -->
+                <div
+                    class="bg-transparent hover:bg-slate-100 dark:hover:bg-neutral-800/40 p-8 rounded-2xl flex flex-col h-full border border-gray-200/60 dark:border-gray-800/20 group transition-colors duration-300">
 
-        <!-- Project 3 -->
-        <a href="#"
-            class="cursor-pointer bg-transparent hover:bg-slate-100 dark:hover:bg-neutral-800/40 p-8 rounded-2xl flex flex-col h-full border border-gray-200/60 dark:border-gray-800/20 group transition-colors duration-300">
-            <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">
-                merojob</h3>
-            <p
-                class="font-body text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-grow transition-colors duration-300">
-                Nepal's #1 job portal — a high-traffic, full-stack platform handling thousands of daily job
-                seekers and employers. Built and maintained core backend services for scalable performance.
-            </p>
-            <div
-                class="text-teal-600 dark:text-teal-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 text-sm font-medium inline-flex items-center transition-colors mt-auto w-max">
-                merojob.com
-                <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </div>
-        </a>
+                    <!-- Project Title -->
+                    <h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">
+                        <?php echo htmlspecialchars($project['title']); ?>
+                    </h3>
 
-    </div>
+                    <!-- Project Description (Enforces equal text block limits with native ellipsis) -->
+                    <p
+                        class="font-body text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-grow transition-colors duration-300 line-clamp-3">
+                        <?php echo htmlspecialchars($project['description']); ?>
+                    </p>
+
+                    <!-- Project Link Action Footer Layout ([Git ------- content ------- Live]) -->
+                    <div
+                        class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800/40">
+
+                        <!-- GitHub Link Container (Left Aligned) -->
+                        <div>
+                            <?php if (!empty($project['github_link'])): ?>
+                                <a href="<?php echo htmlspecialchars($project['github_link']); ?>" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 text-sm font-medium inline-flex items-center transition-colors">
+                                    <span>Git</span>
+                                    <svg class="w-4 h-4 ml-1.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                                    </svg>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Live Demo Link Container (Right Aligned) -->
+                        <div>
+                            <?php if (!empty($project['live_demo_link'])): ?>
+                                <a href="<?php echo htmlspecialchars($project['live_demo_link']); ?>" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-teal-600 dark:text-teal-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm font-medium inline-flex items-center transition-colors">
+                                    <span>Live</span>
+                                    <svg class="w-3.5 h-3.5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+
+                    </div>
+
+                </div>
+            <?php endforeach; ?>
+
+        </div>
+    <?php endif; ?>
 
     <!-- View All Projects Link Container -->
     <div class="mt-12">
-        <a href="#"
+        <a href="projects"
             class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 font-medium text-sm inline-flex items-center group transition-colors">
             View all projects
             <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
@@ -324,8 +337,9 @@ if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items
 
 </div>
 
+
 <!-- Core Services -->
-<div class="core-services section py-16">
+<div id="services" class="core-services section py-16">
     <!-- Section Header (Dynamic Light/Dark states) -->
     <div class="mb-6 md:mb-8">
         <h2
@@ -447,6 +461,7 @@ if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items
 </div>
 
 
+
 <!-- Articles Wrapper -->
 <div class="w-full articles-section py-12">
 
@@ -515,7 +530,7 @@ if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items
             <?php endif; ?>
 
             <div class="mt-6">
-                <a href="blogs.php"
+                <a href="articles/articles.php"
                     class="text-emerald-500 hover:text-emerald-400 text-sm font-medium inline-flex items-center group transition-colors">
                     View all articles
                     <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none"
@@ -528,7 +543,7 @@ if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items
         </div>
 
 
-        <div
+        <div id="skills"
             class="md:col-span-1 bg-white dark:bg-[#343742]/40 border border-gray-200/80 dark:border-gray-700/40 p-6 rounded-3xl shadow-sm dark:shadow-inner transition-colors duration-300">
 
             <div class="flex items-center gap-3 mb-6">

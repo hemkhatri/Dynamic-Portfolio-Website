@@ -3,42 +3,36 @@
 $pageTitle = "Hem B. Khatri - Articles & Insights";
 include "../includes/header.php";
 
-// 2. Full backend data production engine (PHP Data Set Array Matrix)
-$blogs_data = [
-    [
-        "id" => 1,
-        "title" => "Building AI Agent Workflows with LangGraph and Django",
-        "slug" => "building-ai-agent-workflows-langgraph-django",
-        "date" => "March 25, 2026",
-        "datetime" => "2026-03-25",
-        "read_time" => "5 min read",
-        "category" => "AI Workflows",
-        "excerpt" => "A technical deep-dive into building production-grade AI agent workflows using LangGraph for orchestration and Django for persistence, background tasks, and API exposure.",
-        "thumbnail" => "https://unsplash.com"
-    ],
-    [
-        "id" => 2,
-        "title" => "Scaling PostgreSQL Database Queries for High-Traffic Applications",
-        "slug" => "scaling-postgresql-queries-high-traffic",
-        "date" => "February 12, 2026",
-        "datetime" => "2026-02-12",
-        "read_time" => "8 min read",
-        "category" => "Database",
-        "excerpt" => "Optimizing slow indexing, handling connection pooling issues with PgBouncer, and structuring complex database queries to sustain millions of daily requests safely.",
-        "thumbnail" => "https://unsplash.com"
-    ],
-    [
-        "id" => 3,
-        "title" => "How We Engineered Merojob Backend for Zero-Downtime Migration",
-        "slug" => "merojob-backend-zero-downtime-migration",
-        "date" => "January 05, 2026",
-        "datetime" => "2026-01-05",
-        "read_time" => "6 min read",
-        "category" => "Backend",
-        "excerpt" => "An architectural breakdown of running dual-write data pipelines during a complete database overhaul without interrupting active job seekers or employers.",
-        "thumbnail" => "https://unsplash.com"
-    ]
-];
+// डाइनमिक बेस पाथ (Base Path) सेटिङ - लोकलहोस्ट र लाइभ सर्भर स्वतः छुट्याउँछ
+$is_localhost = ($_SERVER['REMOTE_ADDR'] === '127.0.0.1' || $_SERVER['REMOTE_ADDR'] === '::1' || $_SERVER['SERVER_NAME'] === 'localhost');
+$base_path = $is_localhost ? '/hemkhatri.com.np' : '';
+
+// 2. Load the Blogger handler and fetch dynamic articles
+require_once dirname(__DIR__) . '/backend/blogger_post_handler.php';
+$raw_payload = fetch_blogger_data('posts?maxResults=50&', 'posts_cache.json');
+
+$blogs_data = [];
+if ($raw_payload && isset($raw_payload['items']) && is_array($raw_payload['items'])) {
+    $formatted_posts = format_blogger_posts($raw_payload['items']);
+    foreach ($formatted_posts as $post) {
+        // Calculate Read Time dynamically
+        $word_count = str_word_count(strip_tags($post['content'] ?? ''));
+        $read_time_minutes = max(1, ceil($word_count / 200));
+        $read_time = $read_time_minutes . " min read";
+
+        $blogs_data[] = [
+            "id" => $post['id'],
+            "title" => $post['title'],
+            "slug" => $post['slug'],
+            "date" => $post['created_at'],
+            "datetime" => date('Y-m-d', strtotime($post['created_at'])),
+            "read_time" => $read_time,
+            "category" => $post['category_name'],
+            "excerpt" => $post['excerpt'],
+            "thumbnail" => $post['image']
+        ];
+    }
+}
 
 $json_blogs = json_encode($blogs_data);
 ?>
@@ -68,6 +62,8 @@ $json_blogs = json_encode($blogs_data);
 
 <!-- JavaScript Render Application logic -->
 <script>
+    // PHP बाट बेस पाथ र ब्लग डेटा जाभास्क्रिप्टमा पास गरिएको
+    const basePath = "<?php echo $base_path; ?>";
     const blogsData = <?php echo $json_blogs; ?>;
 
     function renderBlogs(articles) {
@@ -112,15 +108,15 @@ $json_blogs = json_encode($blogs_data);
                             <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider text-[#009688] bg-[#009688]/10 border border-[#009688]/20 backdrop-blur-sm shadow-sm shadow-[#009688]/5">
                                 ${article.category}
                             </span>
-
                         </div>
 
                         <!-- [] TITLE AREA -->
                         <h2 class="font-headline text-lg md:text-xl font-bold tracking-tight text-white mb-2">
-                             <a href="post.php?slug=${article.slug}">
+                             <!-- डायनामिक basePath सहितको लिङ्क जसले /hemkhatri.com.np/articles/slug बनाउँछ -->
+                             <a href="${basePath}/articles/${article.slug}">
                                 <span class="absolute -inset-x-4 -inset-y-2 z-20 sm:-inset-x-6 rounded-2xl"></span>
                                 <span class="relative z-10 group-hover:text-brandPrimary transition-colors duration-200">${article.title}</span>
-                            </a>
+                             </a>
                         </h2>
 
                         <!-- [] SHORT DESCRIPTION SUMMARY EXCERPT -->
@@ -142,7 +138,13 @@ $json_blogs = json_encode($blogs_data);
         });
     }
 
+    // Render articles when the page loads normally
     document.addEventListener('DOMContentLoaded', () => {
+        renderBlogs(blogsData);
+    });
+
+    // Render articles again when the SPA router swaps in this page content
+    document.addEventListener('spa:pageLoaded', () => {
         renderBlogs(blogsData);
     });
 </script>
