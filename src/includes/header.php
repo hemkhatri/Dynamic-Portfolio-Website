@@ -3,18 +3,23 @@
 $current_page = basename($_SERVER['PHP_SELF']);
 
 // Calculate dynamic base path to support both subdirectories (XAMPP) and production domain root
-$script_name = $_SERVER['SCRIPT_NAME'];
-if (strpos($script_name, '/articles/') !== false || strpos($script_name, '/projects/') !== false) {
-    $base_path = dirname(dirname($script_name));
-} else {
-    $base_path = dirname($script_name);
-}
-$base_path = rtrim(str_replace('\\', '/', $base_path), '/') . '/';
 
-// If this is an AJAX/SPA request, only send SPA metadata headers and continue
+// Calculate dynamic base path to support both subdirectories (XAMPP) and production domain root
+$base_path = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+
+// Strip out the '/public' directory and anything after it to get the true application root
+if (($pos = strpos($base_path, '/public')) !== false) {
+    $base_path = substr($base_path, 0, $pos);
+}
+
+// Ensure the path always ends with a single trailing slash
+$base_path = rtrim($base_path, '/') . '/';
+
+
 $is_spa = isset($_SERVER['HTTP_X_SPA_REQUEST']) && $_SERVER['HTTP_X_SPA_REQUEST'] === 'true';
 if ($is_spa) {
-    header("X-SPA-Title: " . (isset($pageTitle) ? $pageTitle : "Hem B. Khatri - Portfolio"));
+    $spa_title = isset($pageTitle) ? $pageTitle : 'Hem B. Khatri — Full Stack Developer, Nepal';
+    header("X-SPA-Title: " . $spa_title);
 } else {
     ?>
     <!DOCTYPE html>
@@ -24,8 +29,112 @@ if ($is_spa) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <base href="<?php echo $base_path; ?>">
-        <!-- Using dynamic page title variable if set on pages -->
-        <title><?php echo isset($pageTitle) ? $pageTitle : "Hem B. Khatri - Portfolio"; ?></title>
+
+        <?php
+        // ============================================================
+        // DYNAMIC SEO METADATA SYSTEM
+        // Pages set $pageMeta[] before including this file.
+        // All fields below fall back to safe site-level defaults.
+        // ============================================================
+
+        // --- Resolve canonical URL ---
+        $protocol   = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $host       = $_SERVER['HTTP_HOST'] ?? 'hemkhatri.com.np';
+        $req_uri    = $_SERVER['REQUEST_URI'] ?? '/';
+        $canonical  = $pageMeta['canonical'] ?? ($protocol . '://' . $host . $req_uri);
+
+        // --- Default meta values (site-level optimized for client acquisition) ---
+        $meta_title       = isset($pageTitle) ? $pageTitle : 'Hem B. Khatri | Senior Full Stack Engineer & Python Django Expert';
+        $meta_description = $pageMeta['description']
+            ?? 'Hire Hem B. Khatri, a Senior Full Stack Software Engineer specializing in Python, Django, PostgreSQL, and scalable API architecture. Over 4+ years of delivering high-performance production systems for global clients.';
+        $meta_keywords    = $pageMeta['keywords']
+            ?? 'Hire Python Developer, Freelance Django Engineer, Full Stack Developer Nepal, Backend Architecture, PostgreSQL Expert, Remote Software Engineer, Custom Web Application Development';
+        $meta_og_type     = $pageMeta['og_type']     ?? 'website';
+        
+        // --- High-Quality Social Share Image (Updated from small favicon folder to dedicated banner) ---
+        $meta_og_image    = $pageMeta['og_image']    ?? ($protocol . '://' . $host . '/public/assets/images/og-banner.png');
+        $meta_og_image_alt = $pageMeta['og_image_alt'] ?? 'Hem B. Khatri — Senior Full Stack Software Engineer Portfolio';
+        
+        $meta_robots      = $pageMeta['robots']      ?? 'index, follow';
+        $meta_author      = $pageMeta['author']      ?? 'Hem B. Khatri';
+        $meta_published   = $pageMeta['published']   ?? null;
+        $meta_modified    = $pageMeta['modified']    ?? null;
+
+        // --- JSON-LD Structured Data (Enhanced for corporate visibility) ---
+        $jsonld_type = $pageMeta['jsonld_type'] ?? 'Person';
+        if ($jsonld_type === 'Article' && isset($pageMeta['jsonld_article'])) {
+            $ld = $pageMeta['jsonld_article'];
+        } else {
+            $ld = [
+                '@context' => 'https://schema.org',
+                '@type'    => 'Person',
+                'name'     => 'Hem B. Khatri',
+                'description' => 'Senior Full Stack Software Engineer specializing in Python, Django REST Framework, and cloud-scalable backend infrastructure.',
+                'url'      => 'https://hemkhatri.com.np',
+                'jobTitle' => 'Senior Full Stack Engineer',
+                'worksFor' => [
+                    '@type' => 'Organization', 
+                    'name' => 'merojob'
+                ],
+                'address'  => [
+                    '@type' => 'PostalAddress', 
+                    'addressLocality' => 'Kathmandu',
+                    'addressCountry' => 'NP'
+                ],
+                'knowsAbout' => [
+                    'Python', 'Django', 'PostgreSQL', 'RESTful APIs', 'Software Architecture', 'Full-Stack Development', 'Backend Engineering'
+                ],
+                'sameAs'   => [
+                    'https://github.com/hemkhatri',
+                    'https://www.linkedin.com/in/hemlex',
+                ],
+            ];
+        }
+        ?>
+
+
+        <!-- Primary SEO Meta Tags -->
+        <title><?php echo htmlspecialchars($meta_title); ?></title>
+        <meta name="description"        content="<?php echo htmlspecialchars($meta_description); ?>">
+        <meta name="keywords"           content="<?php echo htmlspecialchars($meta_keywords); ?>">
+        <meta name="author"             content="<?php echo htmlspecialchars($meta_author); ?>">
+        <meta name="robots"             content="<?php echo htmlspecialchars($meta_robots); ?>">
+        <link rel="canonical"           href="<?php echo htmlspecialchars($canonical); ?>">
+
+        <?php if ($meta_published): ?>
+        <meta name="article:published_time" content="<?php echo htmlspecialchars($meta_published); ?>">
+        <?php endif; ?>
+        <?php if ($meta_modified): ?>
+        <meta name="article:modified_time"  content="<?php echo htmlspecialchars($meta_modified); ?>">
+        <?php endif; ?>
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type"        content="<?php echo htmlspecialchars($meta_og_type); ?>">
+        <meta property="og:url"         content="<?php echo htmlspecialchars($canonical); ?>">
+        <meta property="og:title"       content="<?php echo htmlspecialchars($meta_title); ?>">
+        <meta property="og:description" content="<?php echo htmlspecialchars($meta_description); ?>">
+        <meta property="og:image"       content="<?php echo htmlspecialchars($meta_og_image); ?>">
+        <meta property="og:image:alt"   content="<?php echo htmlspecialchars($meta_og_image_alt); ?>">
+        <meta property="og:site_name"   content="Hem B. Khatri Portfolio">
+        <meta property="og:locale"      content="en_US">
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card"        content="summary_large_image">
+        <meta name="twitter:url"         content="<?php echo htmlspecialchars($canonical); ?>">
+        <meta name="twitter:title"       content="<?php echo htmlspecialchars($meta_title); ?>">
+        <meta name="twitter:description" content="<?php echo htmlspecialchars($meta_description); ?>">
+        <meta name="twitter:image"       content="<?php echo htmlspecialchars($meta_og_image); ?>">
+        <meta name="twitter:image:alt"   content="<?php echo htmlspecialchars($meta_og_image_alt); ?>">
+        <meta name="twitter:creator"     content="@hemkhatri">
+        <meta name="twitter:site"        content="@hemkhatri">
+
+        <!-- JSON-LD Structured Data -->
+        <script type="application/ld+json">
+        <?php echo json_encode($ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT); ?>
+        </script>
+
+        <!-- Favicon Import -->
+         <link rel="icon" type="image/png" href="assets/favicon/favicon.png">
 
         <!-- Import Google Fonts -->
         <link rel="preconnect" href="https://googleapis.com">
@@ -142,7 +251,7 @@ if ($is_spa) {
                     <a href="projects"
                         class="px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 <?php echo ($current_page == 'projects.php') ? 'text-brandPrimary font-semibold' : 'text-gray-600 dark:text-gray-400 hover:text-brandPrimary'; ?>">Projects</a>
 
-                    <a href="articles/articles.php"
+                    <a href="articles/"
                         class="px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 <?php echo ($current_page == 'articles.php') ? 'text-brandPrimary font-semibold' : 'text-gray-600 dark:text-gray-400 hover:text-brandPrimary'; ?>">Articles</a>
                 </nav>
 
@@ -191,8 +300,8 @@ if ($is_spa) {
                         class="block text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 text-sm font-medium px-4 py-2.5 rounded-xl transition-colors">Skills</a>
                     <a href="index.php#services"
                         class="block text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 text-sm font-medium px-4 py-2.5 rounded-xl transition-colors">Services</a>
-                    <a href="articles/articles.php"
-                        class="block <?php echo ($current_page == 'articles.php') ? 'text-brandPrimary bg-gray-100 dark:bg-white/5 font-semibold' : 'text-gray-600 dark:text-gray-400'; ?> text-sm font-medium py-2.5 px-4 rounded-xl transition-colors">Blog</a>
+                    <a href="articles/"
+                        class="block <?php echo ($current_page == 'articles.php') ? 'text-brandPrimary bg-gray-100 dark:bg-white/5 font-semibold' : 'text-gray-600 dark:text-gray-400'; ?> text-sm font-medium py-2.5 px-4 rounded-xl transition-colors">Articles</a>
                 </div>
             </div>
         </header>

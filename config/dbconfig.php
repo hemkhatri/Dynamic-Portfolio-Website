@@ -1,8 +1,9 @@
 <?php
-    $db_host = 'localhost';
-    $db_user = 'root';
-    $db_pass = '';
-    $db_name = 'portfolio_db';
+$db_host = 'localhost';
+$db_user = 'root';
+$db_pass = '';
+$db_name = 'portfolio_db'; // Replace with your actual local database name
+
 
     // ADD THIS BLOCK TO CREATE THE CONNECTION
     try {

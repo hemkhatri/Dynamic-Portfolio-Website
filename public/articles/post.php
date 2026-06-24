@@ -55,11 +55,58 @@ $category = !empty($article['category_name']) ? $article['category_name'] : 'Art
 // Handle Thumbnail: Use the 'image' key from the formatted array
 $thumbnail = !empty($article['image']) ? $article['image'] : 'https://unsplash.com'; 
 
-// 9. Mount site layouts 
-$pageTitle = $article['title'] . " - Hem B. Khatri";
+// 9. Mount site layouts
+$pageTitle    = $article['title'] . " — Hem B. Khatri";
+$post_url     = 'https://hemkhatri.com.np/articles/' . ($article['slug'] ?? '');
+$post_excerpt = !empty($article['excerpt'])
+    ? strip_tags(html_entity_decode($article['excerpt']))
+    : 'Read this article by Hem B. Khatri on backend engineering and full stack development.';
+$post_date_iso = isset($article['created_at'])
+    ? date('c', strtotime($article['created_at']))
+    : date('c');
+
+$pageMeta = [
+    'description'  => mb_strimwidth($post_excerpt, 0, 160, '...'),
+    'keywords'     => 'Hem Khatri, ' . ($category ?? 'article') . ', backend engineering, full stack developer Nepal, hemkhatri.com.np',
+    'og_type'      => 'article',
+    'og_image'     => !empty($thumbnail) ? $thumbnail : 'https://hemkhatri.com.np/assets/favicon/profile.png',
+    'og_image_alt' => htmlspecialchars($article['title'] ?? 'Article by Hem B. Khatri'),
+    'canonical'    => $post_url,
+    'robots'       => 'index, follow',
+    'published'    => $post_date_iso,
+    'modified'     => $post_date_iso,
+    'jsonld_type'  => 'Article',
+    'jsonld_article' => [
+        '@context'        => 'https://schema.org',
+        '@type'           => 'TechArticle',
+        'headline'        => $article['title'] ?? '',
+        'description'     => mb_strimwidth($post_excerpt, 0, 160, '...'),
+        'image'           => !empty($thumbnail) ? $thumbnail : 'https://hemkhatri.com.np/assets/favicon/profile.png',
+        'datePublished'   => $post_date_iso,
+        'dateModified'    => $post_date_iso,
+        'author'          => [
+            '@type' => 'Person',
+            'name'  => 'Hem B. Khatri',
+            'url'   => 'https://hemkhatri.com.np',
+        ],
+        'publisher'       => [
+            '@type' => 'Person',
+            'name'  => 'Hem B. Khatri',
+            'url'   => 'https://hemkhatri.com.np',
+        ],
+        'mainEntityOfPage' => [
+            '@type' => 'WebPage',
+            '@id'   => $post_url,
+        ],
+        'articleSection' => $category ?? 'Technology',
+        'url'            => $post_url,
+    ],
+];
 
 // Safety Check: Include header file only if it exists to avoid include-errors
-if (file_exists("../includes/header.php")) {
+if (file_exists(dirname(__DIR__) . '/../../src/includes/header.php')) {
+    include dirname(__DIR__) . '/../../src/includes/header.php';
+} elseif (file_exists("../includes/header.php")) {
     include "../includes/header.php";
 } else {
     echo "<style>body { background: #0b0f19; color: white; font-family: sans-serif; padding: 40px; }</style>";

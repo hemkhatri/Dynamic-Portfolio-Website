@@ -1,6 +1,14 @@
 <?php
-// 1. Set dynamic metadata context before loading layouts
-$pageTitle = "Hem B. Khatri - Articles & Insights";
+// ── Page-specific SEO metadata ──────────────────────────────────────────────
+$pageTitle = "Articles & Insights — Hem B. Khatri";
+$pageMeta  = [
+    'description'  => 'Deep dives by Hem B. Khatri into backend engineering, system architecture, database optimization, and building intelligent developer workflows.',
+    'keywords'     => 'Hem Khatri articles, backend engineering blog, Django Python tutorials, system architecture Nepal, full stack developer blog',
+    'og_type'      => 'website',
+    'og_image_alt' => 'Articles & Insights — Hem B. Khatri',
+    'canonical'    => 'https://hemkhatri.com.np/articles/',
+    'robots'       => 'index, follow',
+];
 include(__DIR__ . '/../../src/includes/header.php');
 
 // डाइनमिक बेस पाथ (Base Path) सेटिङ - लोकलहोस्ट र लाइभ सर्भर स्वतः छुट्याउँछ
@@ -149,4 +157,4 @@ $json_blogs = json_encode($blogs_data);
     });
 </script>
 
-<?php include "../includes/footer.php"; ?>
+<?php include "../../src/includes/footer.php"; ?>

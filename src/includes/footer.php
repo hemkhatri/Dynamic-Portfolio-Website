@@ -44,9 +44,9 @@ if ($is_spa) {
         class="flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-brandNeutral text-brandNeutral dark:text-white shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(0,150,136,0.4)] hover:shadow-[0_0_25px_rgba(0,150,136,0.6)] transition-all duration-300 transform hover:scale-105 focus:outline-none">
 
         <span id="toggle-icon-open" class="block">
-            <img src="<?php echo $path_prefix; ?>assets/icons/ai_assistant_icon.svg" alt="AI Assistant"
+            <img src="<?php echo $path_prefix; ?>public/assets/icons/ai_assistant_icon.svg" alt="AI Assistant"
                 class="w-8 h-8 block dark:hidden" />
-            <img src="<?php echo $path_prefix; ?>assets/icons/ai_assistant_icon.svg" alt="AI Assistant"
+            <img src="<?php echo $path_prefix; ?>public/assets/icons/ai_assistant_icon.svg" alt="AI Assistant"
                 class="w-8 h-8 hidden dark:block invert" />
         </span>
 
@@ -89,7 +89,7 @@ if ($is_spa) {
         <div class="flex items-start gap-3 max-w-[92%]" data-role="assistant">
             <div
                 class="w-7 h-7 rounded-lg bg-white/80 dark:bg-white border border-white dark:border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
-                <img src="<?php echo $path_prefix; ?>assets/icons/ai_profile.svg" alt="AI"
+                <img src="<?php echo $path_prefix; ?>public/assets/icons/ai_profile.svg" alt="AI"
                     class="w-4 h-4 object-contain transition-all duration-300 dark:brightness-0 dark:opacity-80" />
             </div>
             <div class="space-y-1">
@@ -349,7 +349,7 @@ if ($is_spa) {
         screenEl.innerHTML += `
         <div class="flex items-start gap-3 max-w-[92%] ml-auto flex-row-reverse animate-fadeIn" data-role="user">
             <div class="w-7 h-7 rounded-lg bg-white border border-gray-200/80 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
-                <img src="<?php echo $path_prefix; ?>assets/icons/user_profile.svg" alt="User" class="w-4 h-4 object-contain transition-all duration-300 brightness-0 opacity-80" />
+                <img src="<?php echo $path_prefix; ?>public/assets/icons/user_profile.svg" alt="User" class="w-4 h-4 object-contain transition-all duration-300 brightness-0 opacity-80" />
             </div>
             <div class="space-y-1 text-right">
                 <span class="block text-[10px] uppercase font-mono tracking-wider text-slate-500">You</span>
@@ -387,7 +387,7 @@ if ($is_spa) {
         loading.className = "flex items-start gap-3 max-w-[85%] animate-pulse";
         loading.innerHTML = `
         <div class="w-7 h-7 rounded-lg bg-white/80 dark:bg-white border border-white dark:border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
-            <img src="<?php echo $path_prefix; ?>assets/icons/ai_profile.svg" alt="AI" class="w-4 h-4 object-contain transition-all duration-300 dark:brightness-0 dark:opacity-80" />
+            <img src="<?php echo $path_prefix; ?>public/assets/icons/ai_profile.svg" alt="AI" class="w-4 h-4 object-contain transition-all duration-300 dark:brightness-0 dark:opacity-80" />
         </div>
         <div class="space-y-2 w-full pt-1">
             <div class="h-2.5 bg-gray-200 dark:bg-slate-800 rounded w-1/3"></div>
@@ -418,7 +418,7 @@ if ($is_spa) {
             screenEl.innerHTML += `
             <div class="flex items-start gap-3 max-w-[92%] animate-fadeIn" data-role="assistant">
                 <div class="w-7 h-7 rounded-lg bg-white/80 dark:bg-white border border-white dark:border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
-                    <img src="<?php echo $path_prefix; ?>assets/icons/ai_profile.svg" alt="AI" class="w-4 h-4 object-contain transition-all duration-300 dark:brightness-0 dark:opacity-80" />
+                    <img src="<?php echo $path_prefix; ?>public/assets/icons/ai_profile.svg" alt="AI" class="w-4 h-4 object-contain transition-all duration-300 dark:brightness-0 dark:opacity-80" />
                 </div>
                 <div class="space-y-1">
                     <span class="block text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-500 font-semibold dark:font-normal">Hem's AI</span>

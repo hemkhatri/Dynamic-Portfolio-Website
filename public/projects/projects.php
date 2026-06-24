@@ -1,4 +1,15 @@
 <?php
+// ── Page-specific SEO metadata ──────────────────────────────────────────────
+$pageTitle = "Production Projects & Software Architecture Portfolio | Hem B. Khatri";
+$pageMeta  = [
+    'description'  => 'Explore production-grade enterprise systems, scalable REST APIs, and custom software solutions designed and shipped by Senior Engineer Hem B. Khatri using Python, Django, and modern backend tech.',
+    'keywords'     => 'Enterprise Web Applications, Python Django Portfolio, REST API Development, Scalable Backend Architecture, Custom Software Solutions Nepal, Senior Developer Case Studies',
+    'og_type'      => 'website',
+    'og_image_alt' => 'Production Web Applications & Software Architecture Portfolio — Hem B. Khatri',
+    'canonical'    => 'https://hemkhatri.com.np/projects/',
+    'robots'       => 'index, follow',
+];
+
 include_once __DIR__ . '/../../src/includes/header.php';
 // DB Configuration
 $db_host = 'localhost';

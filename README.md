@@ -60,6 +60,13 @@ A high-performance, lightweight, and modern **dynamic PHP portfolio website and 
   * Class-based dark mode control persisted in `localStorage`.
   * Visual glassmorphism effects (`backdrop-blur-md` and alpha borders) on header components active on scroll down.
 
+* **🔍 Dynamic Per-Page SEO Metadata Engine (`includes/header.php`)**
+  * Every page declares its own `$pageMeta[]` array before the `header.php` include — no global config needed.
+  * Automatically generates `<title>`, `meta description`, `meta keywords`, `robots`, and `link rel="canonical"` for each route.
+  * Full **Open Graph** (`og:title`, `og:description`, `og:image`, `og:url`, `og:type`) and **Twitter Card** (`summary_large_image`) tags injected on every page.
+  * Inserts **JSON-LD Structured Data** appropriate to the page type: `Person` schema on the home page, and `TechArticle` schema on individual blog posts — including `datePublished`, `author`, `publisher`, and `mainEntityOfPage` fields.
+  * Falls back gracefully to production-ready site-level defaults when a page does not set `$pageMeta`.
+
 ---
 
 ## 🛠️ Technology Stack Architecture

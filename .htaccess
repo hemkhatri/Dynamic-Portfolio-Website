@@ -1,27 +1,33 @@
 Options +FollowSymLinks -Indexes
 RewriteEngine On
 
-# Explicitly set the base subdirectory folder for XAMPP
+# 1. Point the base directly to your subfolder
 RewriteBase /hemkhatri.com.np/
 
-# 1. Route everything to the public folder internally
-# If the request doesn't already start with 'public/'
-RewriteCond %{REQUEST_URI} !^/hemkhatri.com.np/public/
-
-# Rewrite the root URL to public/index.php
-RewriteRule ^$ public/index.php [L]
-
-# Rewrite asset and file paths to look inside public/
-RewriteCond %{REQUEST_URI} !^/hemkhatri.com.np/public/
-RewriteRule ^(.*)$ public/$1 [L]
-
-# 2. Turn off directory slashing conflicts
+# Disable Apache's automatic physical trailing slash redirects for directories
 DirectorySlash Off
 
-# 3. Map clean URLs inside the public directory
-RewriteRule ^projects$ public/projects/projects.php [L,QSA]
+# 2. Handle directory trailing slashes safely ONLY for real physical subfolders
+# (This prevents exposing 'public/' in the browser URL bar)
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.*?[^/])$ /hemkhatri.com.np/$1/ [R=301,L]
 
-# 4. Route clean article URLs inside the public directory
+# 3. Route specific clean URLs (Executes internally WITHOUT changing browser address text)
+RewriteRule ^projects/?$ public/projects/projects.php [L,QSA]
+RewriteRule ^articles/?$ public/articles/articles.php [L,QSA] 
+RewriteRule ^articles/([^/]+)/?$ public/articles/post.php?slug=$1 [L,QSA]
+
+# 4. Route root URL of your subfolder to your public index
+RewriteRule ^$ public/index.php [L]
+
+# 5. Route assets locally relative to the subfolder directory
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond public/$1 -f [OR]
+RewriteCond public/$1 -d
+RewriteRule ^(.*)$ public/$1 [L]
+
+# 6. Fallback for clean URLs/router
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^articles/([^/]+)$ public/articles/post.php?slug=$1 [L,QSA]
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ public/index.php?/$1 [L,QSA]
