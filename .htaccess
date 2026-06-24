@@ -13,6 +13,7 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^(.*?[^/])$ /hemkhatri.com.np/$1/ [R=301,L]
 
 # 3. Route specific clean URLs (Executes internally WITHOUT changing browser address text)
+RewriteRule ^about/?$ public/about.php [L,QSA]
 RewriteRule ^projects/?$ public/projects/projects.php [L,QSA]
 RewriteRule ^articles/?$ public/articles/articles.php [L,QSA] 
 RewriteRule ^articles/([^/]+)/?$ public/articles/post.php?slug=$1 [L,QSA]
